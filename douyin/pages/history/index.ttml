@@ -1,0 +1,37 @@
+<view class="page">
+  <view class="hd">
+    <view class="hl">
+      <text class="h1">训练历史</text>
+      <text class="sub">{{count}} 场 · 共 {{volume}} kg</text>
+    </view>
+    <text class="logbtn" bindtap="onLog">+ 补录</text>
+  </view>
+
+  <input class="search" value="{{q}}" placeholder="搜动作名或日期（如 胸 / 11-0）" bindinput="onInput" />
+
+  <text class="err" tt:if="{{err}}">{{err}}</text>
+  <view class="empty" tt:if="{{!items.length && !err}}">还没有记录。练完一场就会出现在这里。</view>
+
+  <view class="grp" tt:for="{{groups}}" tt:for-item="g" tt:key="label">
+    <text class="glabel">{{g.label}}</text>
+
+    <view class="item" tt:for="{{g.items}}" tt:for-item="w" tt:key="id" data-id="{{w.id}}" bindtap="onToggle">
+      <view class="row">
+        <text class="name">{{w.name}}</text>
+        <text class="date">{{w.d}}</text>
+      </view>
+      <view class="meta">{{w.sets}} 组 · {{w.volume}} kg · {{w.minutes}} 分钟<text class="prtag" tt:if="{{w.prs}}"> · {{w.prs}} 项 PR</text></view>
+      <text class="del" catchtap="onDelete" data-id="{{w.id}}">删除</text>
+      <view class="exs" tt:if="{{open === w.id}}">
+        <view class="exrow" tt:for="{{w.exercises}}" tt:for-item="ex" tt:key="id">
+          <view class="exleft"><text class="exname">{{ex.name}}</text><text class="prbadge" tt:if="{{ex.pr}}">PR</text></view>
+          <view class="exright">
+          <text class="exsets">{{ex.line}}</text>
+          <text class="exwarm" tt:if="{{ex.warm}}">热身 {{ex.warm}} 组</text>
+          <text class="exnote" tt:if="{{ex.note}}">{{ex.note}}</text>
+        </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

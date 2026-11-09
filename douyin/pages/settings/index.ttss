@@ -1,0 +1,103 @@
+page {
+  background: #f7f6f3;
+  color: #0e0e0e;
+}
+.wrap {
+  min-height: 100vh;
+  padding: 48rpx 40rpx calc(40rpx + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+}
+.word { font-size: 22rpx; letter-spacing: 10rpx; color: #8a8577; }
+.err { display: block; margin-top: 20rpx; font-size: 22rpx; color: #b0231b; }
+
+.sec {
+  margin-top: 36rpx;
+  padding-top: 26rpx;
+  border-top: 2rpx solid #0e0e0e;
+}
+.k { font-size: 20rpx; letter-spacing: 6rpx; color: #8a8577; }
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 22rpx 0 6rpx;
+}
+.lk { font-size: 26rpx; color: #0e0e0e; }
+.lv { font-size: 26rpx; font-family: "Songti SC", "Noto Serif SC", serif; font-weight: 700; }
+.sh { display: block; margin-top: 4rpx; font-size: 20rpx; color: #8a8577; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 12rpx; margin-top: 12rpx; }
+.chip {
+  padding: 12rpx 22rpx;
+  border: 1rpx solid #e4e3df;
+  background: #fffefc;
+  font-size: 22rpx;
+  color: #3d3b35;
+}
+.chip.on { background: #0e0e0e; border-color: #0e0e0e; color: #f7f6f3; }
+
+.srow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  padding: 26rpx 0;
+  border-bottom: 1rpx solid #e4e3df;
+}
+.sl { flex: 1; min-width: 0; }
+
+.sw {
+  width: 88rpx;
+  height: 48rpx;
+  border-radius: 24rpx;
+  background: #ded8ca;
+  position: relative;
+  flex: none;
+  transition: background .15s;
+}
+.sw.on { background: #0e0e0e; }
+.knob {
+  position: absolute;
+  top: 6rpx;
+  left: 6rpx;
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  background: #fffefc;
+  transition: left .15s;
+}
+.sw.on .knob { left: 46rpx; }
+
+.seg {
+  display: flex;
+  border: 1rpx solid #0e0e0e;
+  flex: none;
+}
+.opt {
+  min-width: 72rpx;
+  text-align: center;
+  padding: 12rpx 0;
+  font-size: 24rpx;
+}
+.opt.on { background: #0e0e0e; color: #f7f6f3; }
+
+.eqname {
+  margin-top: 18rpx;
+  padding: 20rpx 22rpx;
+  border: 1rpx solid #e4e3df;
+  background: #fffefc;
+  font-size: 26rpx;
+}
+.savebtn {
+  margin-top: 24rpx;
+  text-align: center;
+  font-size: 26rpx;
+  letter-spacing: 6rpx;
+  padding: 24rpx 0;
+}
+.savebtn.ghost {
+  border: 1rpx solid #0e0e0e;
+  color: #0e0e0e;
+}
+.hint { display: block; margin-top: 12rpx; font-size: 20rpx; color: #8a8577; }

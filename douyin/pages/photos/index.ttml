@@ -1,0 +1,20 @@
+<view class="wrap">
+  <text class="word">进度照片</text>
+  <text class="err" tt:if="{{err}}" bindtap="load">{{err}} · 点这里重试</text>
+
+  <view class="addrow">
+    <input class="noteinput" value="{{note}}" placeholder="备注（比如：第 8 周，空腹）" bindinput="onNote" />
+    <view class="addbtn" bindtap="onAdd">{{busy ? '上传中…' : '＋ 加一张'}}</view>
+  </view>
+
+  <view class="grid">
+    <view class="cell" tt:for="{{items}}" tt:key="id">
+      <image class="thumb" src="{{item.url}}" mode="aspectFill" data-url="{{item.url}}" bindtap="onPreview" show-menu-by-longpress />
+      <text class="cd">{{item.d}}</text>
+      <text class="cn" tt:if="{{item.note}}">{{item.note}}</text>
+      <text class="cdel" catchtap="onDelete" data-id="{{item.id}}">删</text>
+    </view>
+  </view>
+
+  <text class="empty" tt:if="{{!loading && !items.length}}">还没有照片。同一角度、同一光线下，隔几周拍一张最能看出变化。</text>
+</view>

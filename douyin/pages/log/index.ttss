@@ -1,0 +1,149 @@
+page {
+  background: #f7f6f3;
+  color: #0e0e0e;
+}
+.wrap {
+  min-height: 100vh;
+  padding: 48rpx 40rpx calc(40rpx + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+}
+.word {
+  font-size: 22rpx;
+  letter-spacing: 10rpx;
+  color: #8a8577;
+}
+.rowline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 32rpx;
+  padding: 24rpx 0;
+  border-top: 2rpx solid #0e0e0e;
+  border-bottom: 1rpx solid #e4e3df;
+}
+.lk {
+  font-size: 22rpx;
+  color: #8a8577;
+  letter-spacing: 4rpx;
+}
+.lv {
+  font-size: 28rpx;
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  font-weight: 700;
+}
+.nameinput {
+  margin-top: 20rpx;
+  padding: 22rpx 24rpx;
+  border: 1rpx solid #e4e3df;
+  background: #fffefc;
+  font-size: 28rpx;
+}
+.exrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10rpx;
+  padding: 22rpx 0;
+  border-bottom: 1rpx solid #e4e3df;
+}
+.exname {
+  width: 100%;
+  font-size: 28rpx;
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  font-weight: 700;
+}
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+}
+.sbtn {
+  width: 44rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #6f6a5f;
+  border: 1rpx solid #e4e3df;
+  padding: 4rpx 0;
+}
+.sval {
+  font-size: 22rpx;
+  color: #4b463c;
+  min-width: 80rpx;
+  text-align: center;
+}
+.del {
+  font-size: 32rpx;
+  color: #b0231b;
+  padding: 0 8rpx;
+}
+.addrow {
+  margin-top: 24rpx;
+  padding: 22rpx 0;
+  text-align: center;
+  font-size: 24rpx;
+  color: #6f6a5f;
+  border: 1rpx dashed #d8d3c6;
+}
+.savebtn {
+  margin-top: 28rpx;
+  background: #0e0e0e;
+  color: #f7f6f3;
+  text-align: center;
+  font-size: 28rpx;
+  letter-spacing: 6rpx;
+  padding: 28rpx 0;
+}
+.mask {
+  position: fixed;
+  left: 0; right: 0; top: 0; bottom: 0;
+  background: rgba(10, 10, 8, .38);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  z-index: 20;
+}
+.sheet {
+  background: #fffefc;
+  border-radius: 28rpx 28rpx 0 0;
+  padding: 28rpx 32rpx calc(28rpx + env(safe-area-inset-bottom));
+  max-height: 80vh;
+}
+.sheet-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.sheet-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+}
+.sheet-x {
+  font-size: 40rpx;
+  color: #8a8577;
+  padding: 0 8rpx;
+}
+.pick {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 26rpx 4rpx;
+  border-bottom: 1rpx solid #e4e3df;
+}
+.pname {
+  font-size: 28rpx;
+}
+.psub {
+  font-size: 20rpx;
+  color: #8a8577;
+}
+.picklist {
+  max-height: 50vh;
+  margin-top: 8rpx;
+}
+.hint {
+  display: block;
+  padding: 20rpx 0;
+  font-size: 22rpx;
+  color: #8a8577;
+}

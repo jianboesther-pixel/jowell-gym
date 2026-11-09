@@ -1,0 +1,50 @@
+<view class="page">
+  <view class="hd">
+    <text class="h1">今天这套</text>
+    <text class="sub">改动作、组数、次数</text>
+  </view>
+
+  <view class="tpl" tt:if="{{!items.length}}">
+    <text class="tp">还没有动作。先选一套模板，或者搜一个动作加进来。</text>
+    <view class="tplbtn" hover-class="pressed" data-k="full3" bindtap="onTemplate">全身 · 每周 3 天</view>
+    <view class="tplbtn" hover-class="pressed" data-k="upperlower4" bindtap="onTemplate">上下肢 · 每周 4 天</view>
+    <view class="tplbtn" hover-class="pressed" data-k="ppl3" bindtap="onTemplate">推拉腿 · 每周 3 天</view>
+  </view>
+
+  <view class="item" tt:for="{{items}}" tt:key="id">
+    <view class="row">
+      <text class="name">{{item.name}}</text>
+      <text class="del" data-i="{{index}}" bindtap="onDel">删除</text>
+    </view>
+    <view class="row2">
+      <view class="mini">
+        <view class="mbtn" hover-class="pressed" data-i="{{index}}" data-d="-1" bindtap="onSets">−</view>
+        <text class="mval">{{item.sets}}<text class="munit">组</text></text>
+        <view class="mbtn" hover-class="pressed" data-i="{{index}}" data-d="1" bindtap="onSets">+</view>
+      </view>
+      <view class="mini">
+        <view class="mbtn" hover-class="pressed" data-i="{{index}}" data-d="-1" bindtap="onReps">−</view>
+        <text class="mval">{{item.reps}}<text class="munit">次</text></text>
+        <view class="mbtn" hover-class="pressed" data-i="{{index}}" data-d="1" bindtap="onReps">+</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="addrow" hover-class="pressed" bindtap="onOpenSearch">+ 加一个动作</view>
+
+  <view class="search" tt:if="{{searching}}">
+    <view class="srow">
+      <input class="sinput" placeholder="搜动作，比如 卧推" placeholder-class="ph" value="{{q}}" bindinput="onQ" confirm-type="search" bindconfirm="onSearch" />
+      <view class="sbtn" hover-class="pressed" bindtap="onSearch">搜索</view>
+    </view>
+    <view class="res" tt:for="{{results}}" tt:key="id">
+      <view class="resrow" hover-class="pressed" data-i="{{index}}" bindtap="onAdd">
+        <text class="resname">{{item.name}}</text>
+        <text class="resen">{{item.en}}</text>
+      </view>
+    </view>
+    <text class="tips" tt:if="{{!results.length && q}}">没搜到，换个说法试试（中文名或英文名）</text>
+  </view>
+
+  <view class="save {{busy ? 'busy' : ''}}" hover-class="pressed" bindtap="onSave">{{busy ? '保存中…' : '保存'}}</view>
+</view>

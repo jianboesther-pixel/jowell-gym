@@ -1,0 +1,17 @@
+{
+  "name": "JoWell健身",
+  "short_name": "JoWell健身",
+  "description": "JoWell 健身 · 训练与体重记录",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f7f6f3",
+  "theme_color": "#f7f6f3",
+  "icons": [
+    { "src": "icon-jowell-180.png", "sizes": "180x180", "type": "image/png", "purpose": "any" },
+    { "src": "icon-jowell-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-jowell-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-jowell-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

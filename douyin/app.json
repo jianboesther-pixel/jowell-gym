@@ -1,0 +1,25 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/workout/index",
+    "pages/bind/index",
+    "pages/history/index",
+    "pages/plan/index",
+    "pages/stats/index",
+    "pages/weight/index",
+    "pages/measure/index",
+    "pages/library/index",
+    "pages/settings/index",
+    "pages/plans/index",
+    "pages/log/index",
+    "pages/nutrition/index",
+    "pages/muscles/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "JoWell健身",
+    "navigationBarBackgroundColor": "#f7f6f3",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f7f6f3",
+    "backgroundTextStyle": "dark"
+  }
+}

@@ -1,0 +1,39 @@
+<view class="wrap">
+  <text class="word">体测数据</text>
+  <text class="err" tt:if="{{err}}" bindtap="load">{{err}} · 点这里重试</text>
+
+  <view class="daterow">
+    <text class="dlabel">日期</text>
+    <text class="dval">{{d}}</text>
+  </view>
+
+  <view class="group" tt:for="{{groups}}" tt:for-item="g" tt:key="name">
+    <view class="ghead" data-name="{{g.name}}" bindtap="onGroup">
+      <text class="gname">{{g.name}}</text>
+      <text class="gchev">{{openGroup === g.name ? '−' : '+'}}</text>
+    </view>
+    <block tt:if="{{openGroup === g.name}}">
+      <view class="frow" tt:for="{{g.fields}}" tt:for-item="f" tt:key="key">
+        <text class="flabel">{{f.zh}}</text>
+        <input class="finput" type="digit" value="{{values[f.key]}}" placeholder="—" data-k="{{f.key}}" bindinput="onVal" />
+        <text class="funit">{{f.percent ? '%' : 'cm'}}</text>
+        <text class="fdelta {{deltas[f.key] > 0 ? 'up' : 'down'}}" tt:if="{{deltas[f.key]}}">{{deltas[f.key] > 0 ? '+' : ''}}{{deltas[f.key]}}</text>
+      </view>
+    </block>
+  </view>
+
+  <view class="savebtn" bindtap="onSave">{{saving ? '保存中…' : '保存这一天'}}</view>
+
+  <view class="sec" tt:if="{{history.length}}">
+    <text class="sech">历史（{{history.length}} 天）</text>
+    <view class="hrow" tt:for="{{history}}" tt:key="d">
+      <view class="hl">
+        <text class="hd">{{item.d}}</text>
+        <text class="hn">{{item.d === latest.d ? '最新' : ''}}</text>
+      </view>
+      <text class="hv">{{item.values.waist ? '腰 ' + item.values.waist : (item.values.chest ? '胸 ' + item.values.chest : item.values.bodyFat ? '体脂 ' + item.values.bodyFat + '%' : '')}}</text>
+      <text class="hdel" catchtap="onDelete" data-d="{{item.d}}">删</text>
+    </view>
+  </view>
+  <text class="empty" tt:if="{{!loading && !history.length}}">还没有记录。量一次围度，从腰围开始就够了。</text>
+</view>

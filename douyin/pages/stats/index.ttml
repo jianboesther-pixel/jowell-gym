@@ -1,0 +1,153 @@
+<view class="wrap">
+  <text class="word">统计</text>
+
+  <text class="err" tt:if="{{err}}" bindtap="load">{{err}} · 点这里重试</text>
+
+  <view class="ranges">
+    <view class="rchip {{rangeWeeks === item.n ? 'on' : ''}}" tt:for="{{weekRanges}}" tt:key="n"
+          data-n="{{item.n}}" bindtap="onRange">{{item.label}}</view>
+  </view>
+
+  <view class="grid">
+    <view class="cell">
+      <text class="k">本周</text>
+      <text class="num">{{thisWeek.count}}<text class="unit">次</text></text>
+    </view>
+    <view class="cell">
+      <text class="k">连续</text>
+      <text class="num">{{streak}}<text class="unit">周</text></text>
+    </view>
+    <view class="cell">
+      <text class="k">总量</text>
+      <text class="num">{{totals.volume}}<text class="unit">kg</text></text>
+    </view>
+  </view>
+
+  <view class="sec" tt:if="{{muscles.length}}">
+    <text class="sech">肌肉平衡 · 最近 {{rangeWeeks}} 周（组）</text>
+    <view class="mrow" tt:for="{{muscles}}" tt:key="zh">
+      <text class="mname">{{item.zh}}</text>
+      <view class="mbar"><view class="mfill" style="width:{{item.pct}}%"></view></view>
+      <text class="mnum">{{item.sets}}</text>
+    </view>
+  </view>
+
+  <view class="sec" tt:if="{{effort && effort.total}}">
+    <text class="sech">力竭感 · 每组余力（{{effort.total}} 组）</text>
+    <view class="erow" tt:for="{{effort.bins}}" tt:key="rir">
+      <text class="elabel">{{item.label}}</text>
+      <view class="ebar"><view class="efill" style="width:{{item.pct}}%"></view></view>
+      <text class="enum">{{item.sets}}</text>
+    </view>
+    <text class="hint">0 = 力竭，数字越大说明离力竭越远</text>
+  </view>
+
+  <view class="sec" tt:if="{{fatigue.length}}">
+    <text class="sech">疲劳度 · 离上次练够多久了</text>
+    <view class="frow" tt:for="{{fatigue}}" tt:key="zh">
+      <view class="fl">
+        <text class="fname">{{item.zh}}</text>
+        <text class="fsub">{{item.lastD}} · {{item.sets}} 组 · {{item.hours}} 小时前</text>
+      </view>
+      <view class="fmeter">
+        <view class="ffill" style="width:{{item.pct}}%"></view>
+      </view>
+      <text class="fstate {{item.pct >= 95 ? 'ok' : (item.pct >= 60 ? 'mid' : 'low')}}">{{item.status}}</text>
+    </view>
+  </view>
+
+  <view class="sec" tt:if="{{structure.length}}">
+    <text class="sech">结构平衡 · 推 / 拉 / 腿 / 核心</text>
+    <view class="mrow" tt:for="{{structure}}" tt:key="key">
+      <text class="mname">{{item.zh}}</text>
+      <view class="mbar"><view class="mfill" style="width:{{item.pct}}%"></view></view>
+      <text class="mnum">{{item.pct}}%</text>
+    </view>
+  </view>
+
+  <view class="sec" tt:if="{{recent.length}}">
+    <text class="sech">最近训练</text>
+    <view class="rrow" tt:for="{{recent}}" tt:key="id" bindtap="onHistory">
+      <view class="rl2">
+        <text class="rname">{{item.name}}</text>
+        <text class="rsub">{{item.d}} · {{item.sets}} 组 · {{item.volume}} kg</text>
+      </view>
+      <text class="chev">›</text>
+    </view>
+  </view>
+
+  <view class="sec" tt:if="{{strength.length}}">
+    <text class="sech">力量 · 估算 1RM（kg）</text>
+    <view class="srow2" tt:for="{{strength}}" tt:key="id">
+      <view class="sl2">
+        <text class="sname">{{item.name}}</text>
+        <text class="sset">{{item.w}} kg × {{item.r}}</text>
+      </view>
+      <text class="sval">{{item.e1rm}}</text>
+    </view>
+  </view>
+
+  <view class="sec" tt:if="{{weekly.length}}">
+    <text class="sech">每周肌群容量（最近 {{weekly.length}} 周）</text>
+    <view class="wkrow" tt:for="{{weekly}}" tt:key="from">
+      <text class="wkdate">{{item.label}}</text>
+      <view class="wkbar">
+        <view class="wkseg tone{{seg.tone}}" tt:for="{{item.segs}}" tt:for-item="seg" tt:key="zh" style="width:{{seg.pct}}%"></view>
+      </view>
+      <text class="wktotal">{{item.total}}</text>
+    </view>
+  </view>
+
+  <view class="sec" tt:if="{{progressList.length}}">
+    <text class="sech">单动作进步（估算 1RM）</text>
+    <picker range="{{progressList}}" range-key="name" bindchange="onPickProgress">
+      <view class="picker">{{progName || '选一个动作看曲线'}} ▾</view>
+    </picker>
+    <view class="wchart" tt:if="{{progRows.length}}">
+      <view class="wcol" tt:for="{{progRows}}" tt:key="d">
+        <view class="wbar" style="height:{{item.h}}rpx"></view>
+        <text class="wdate">{{item.d}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="sec" tt:if="{{weights.length}}">
+    <text class="sech">体重 · 最近 {{weights.length}} 次（{{wmin}} – {{wmax}} kg）</text>
+    <view class="wchart">
+      <view class="wcol" tt:for="{{weights}}" tt:key="d">
+        <view class="wbar" style="height:{{item.h}}rpx"></view>
+        <text class="wdate">{{item.d.slice(5)}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="sec" tt:if="{{grid.length}}">
+    <text class="sech">训练活动 · 最近 {{rangeWeeks}} 周</text>
+    <view class="heat">
+      <view class="hcol" tt:for="{{grid}}" tt:key="w">
+        <view class="hdot {{cell.on ? 'on' : ''}} {{cell.future ? 'future' : ''}}" tt:for="{{item.cells}}" tt:for-item="cell" tt:key="iso"></view>
+      </view>
+    </view>
+    <text class="hint">每列一周，每行一天；涂黑的说明那天练过</text>
+  </view>
+
+  <view class="chart">
+    <view class="bars">
+      <view class="barwrap" tt:for="{{bars}}" tt:key="from">
+        <view class="bar {{item.count ? 'on' : ''}}" style="height:{{item.h}}%"></view>
+        <text class="blabel">{{item.label}}</text>
+      </view>
+    </view>
+    <text class="cap">最近 12 周容量（每根一周）</text>
+  </view>
+
+  <view class="rows">
+    <view class="row"><text class="k">一共练了</text><text class="v">{{totals.sessions}} 场</text></view>
+    <view class="row"><text class="k">这周容量</text><text class="v">{{thisWeek.volume}} kg</text></view>
+  </view>
+<view class="datalinks">
+    <text class="dlink" bindtap="onWeightPage">体重</text>
+    <text class="dlink" bindtap="onMeasurePage">体测</text>
+    <text class="dlink" bindtap="onNutritionPage">饮食</text>
+  </view>
+</view>

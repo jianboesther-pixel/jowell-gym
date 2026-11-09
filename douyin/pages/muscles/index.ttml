@@ -1,0 +1,16 @@
+<view class="wrap">
+  <text class="h1">按肌肉</text>
+  <text class="sub">选一个肌群，看练它的动作</text>
+
+  <view class="chips">
+    <view class="chip {{tg === item.key ? 'on' : ''}}" tt:for="{{muscles}}" tt:key="key"
+          data-k="{{item.key}}" data-zh="{{item.zh}}" bindtap="onPick">{{item.zh}} {{item.count}}</view>
+  </view>
+
+  <text class="sech" tt:if="{{tgZh}}">{{tgZh}} · {{total}} 个动作</text>
+  <view class="row" tt:for="{{items}}" tt:key="id">
+    <text class="rn">{{item.name}}</text>
+    <text class="rs">{{item.eqZh}}</text>
+  </view>
+  <text class="empty" tt:if="{{!tgZh}}">上面选一个肌群</text>
+</view>

@@ -1,0 +1,56 @@
+<view class="wrap">
+  <text class="word">饮食</text>
+  <text class="err" tt:if="{{err}}" bindtap="load">{{err}} · 点这里重试</text>
+
+  <view class="sec">
+    <text class="k">今天（{{today.d}}）</text>
+    <view class="inputrow">
+      <input class="in" type="number" value="{{kcal}}" placeholder="0" bindinput="onKcal" />
+      <text class="unit">千卡</text>
+      <input class="in" type="number" value="{{protein}}" placeholder="0" bindinput="onProtein" />
+      <text class="unit">克蛋白</text>
+    </view>
+    <view class="savebtn" bindtap="onSave">{{saving ? '保存中…' : '记下今天'}}</view>
+    <text class="hint" tt:if="{{goal}}">目标：{{goal.kcal}} 千卡 · {{goal.protein}} 克蛋白</text>
+    <view class="prow" tt:if="{{goal}}">
+      <text class="plab">热量</text>
+      <view class="pbar"><view class="pfill" style="width:{{pctKcal}}%"></view></view>
+      <text class="pnum">{{pctKcal}}%</text>
+    </view>
+    <view class="prow" tt:if="{{goal}}">
+      <text class="plab">蛋白</text>
+      <view class="pbar"><view class="pfill" style="width:{{pctProtein}}%"></view></view>
+      <text class="pnum">{{pctProtein}}%</text>
+    </view>
+  </view>
+
+  <view class="sec">
+    <text class="k">目标</text>
+    <view class="inputrow">
+      <input class="in" type="number" value="{{goalKcal}}" placeholder="2400" bindinput="onGoalKcal" />
+      <text class="unit">千卡</text>
+      <input class="in" type="number" value="{{goalProtein}}" placeholder="150" bindinput="onGoalProtein" />
+      <text class="unit">克蛋白</text>
+    </view>
+    <view class="savebtn ghost" bindtap="onSaveGoal">保存目标</view>
+  </view>
+
+  <view class="sec" tt:if="{{bars.length}}">
+    <text class="k">近 7 天</text>
+    <view class="wchart">
+      <view class="wcol" tt:for="{{bars}}" tt:key="d">
+        <view class="wbar" style="height:{{item.h}}rpx"></view>
+        <text class="wdate">{{item.d}}</text>
+      </view>
+    </view>
+    <text class="hint">平均 {{avgKcal}} 千卡 · {{avgProtein}} 克蛋白（按有记录的天算）</text>
+  </view>
+
+  <view class="sec">
+    <text class="k">前 6 天</text>
+    <view class="row" tt:for="{{days}}" tt:key="d">
+      <text class="d">{{item.d}}</text>
+      <text class="v">{{item.has ? item.kcal + ' 千卡 · ' + item.protein + ' 克' : '没记'}}</text>
+    </view>
+  </view>
+</view>

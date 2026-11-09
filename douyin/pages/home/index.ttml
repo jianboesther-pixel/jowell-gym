@@ -1,0 +1,74 @@
+<view class="wrap">
+  <view class="head">
+    <view class="hl">
+      <text class="word">JOWELL</text>
+      <text class="hi">{{name || '今天'}}</text>
+      <text class="date">{{dateLine}}</text>
+    </view>
+    <view class="gear" bindtap="onSettings">⚙</view>
+  </view>
+
+  <text class="err" tt:if="{{err}}" bindtap="load">{{err}} · 点这里重试</text>
+
+  <view class="hero">
+    <!-- 泼墨：印章后面一团淡墨 + 几点飞溅，纯 CSS，不依赖图片 -->
+    <view class="inkblot"></view>
+    <view class="inkblot b2"></view>
+    <view class="splat s1"></view>
+    <view class="splat s2"></view>
+    <view class="splat s3"></view>
+    <view class="splat s4"></view>
+    <view class="splat s5"></view>
+    <text class="k">今日</text>
+    <view class="herorow">
+      <view class="stampwrap">
+        <view class="stamp"><text class="stampt">{{hasPlan ? stamp : '休'}}</text></view>
+        <view class="done" tt:if="{{doneToday}}">
+          <text class="dl">已</text>
+          <text class="dl">完成</text>
+        </view>
+      </view>
+      <view class="side">
+        <view class="sidecol">
+          <text class="v">本周 {{doneThisWeek}} 次</text>
+          <text class="v">连续 {{streak}} 周</text>
+        </view>
+        <view class="recent" tt:if="{{lastWorkout}}" bindtap="onHistory">
+          <text class="rt">最近训练 ›</text>
+          <text class="rd">{{lastWorkout.d}} · {{lastVol}} kg</text>
+        </view>
+      </view>
+    </view>
+    <text class="meta">{{hasPlan ? exCount + ' 个动作 · ' + setCount + ' 组' : (inProgress > 0 ? '进行中 · 已记 ' + inProgress + ' 组' : '休息日')}}</text>
+    <view class="start" hover-class="pressed" bindtap="onHero">{{hasPlan ? (doneToday ? '再练一场' : '开始训练') : '换一套'}}</view>
+  </view>
+
+  <view class="weekblock">
+    <view class="wknav">
+      <view class="arrow" bindtap="onPrevWeek">‹</view>
+      <text class="wklabel">{{weekLabel}}</text>
+      <view class="arrow" bindtap="onNextWeek">›</view>
+    </view>
+    <view class="week">
+      <view class="wd" tt:for="{{days}}" tt:key="label">
+        <text class="wl">{{item.label}}</text>
+        <text class="wn {{item.today ? 'on' : ''}}">{{item.day}}</text>
+        <view class="dot" style="{{item.done ? 'background:#b0231b' : 'background:#d8d3c6'}}"></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="rows" tt:if="{{recap}}">
+    <view class="row"><text class="rk">上周</text><text class="rv">{{recap.sessions}} 次</text></view>
+    <view class="row"><text class="rk">总量</text><text class="rv">{{recap.volume}} kg</text></view>
+  </view>
+
+  <view class="foot">
+    <text class="link" bindtap="onPlans">我的计划</text>
+    <text class="link" bindtap="onFree">随便练</text>
+    <text class="link" bindtap="onLibrary">动作库</text>
+    <text class="link" bindtap="onHistory">历史</text>
+    <text class="link" bindtap="onStats">统计</text>
+    <text class="link" bindtap="onSettings">设置</text>
+  </view>
+</view>

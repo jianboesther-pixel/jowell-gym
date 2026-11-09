@@ -1,0 +1,113 @@
+<view class="wrap">
+  <text class="word">计划</text>
+  <text class="err" tt:if="{{err}}" bindtap="load">{{err}} · 点这里重试</text>
+
+  <view class="sec">
+    <view class="sechead">
+      <text class="k">我的计划</text>
+      <text class="add" bindtap="onStarter">载入新手</text>
+      <text class="add" bindtap="onNew">+ 新建</text>
+    </view>
+    <view class="row" tt:for="{{routines}}" tt:key="id" data-id="{{item.id}}" bindtap="onEdit">
+      <view class="rowl">
+        <text class="name">{{item.name}}</text>
+        <text class="sub">{{item.ex.length}} 个动作{{item.note ? ' · ' + item.note : ''}}</text>
+      </view>
+      <text class="dup" data-id="{{item.id}}" catchtap="onDup">复制</text>
+      <text class="dup" data-id="{{item.id}}" catchtap="onDeload">减载</text>
+      <text class="chev">›</text>
+    </view>
+    <text class="empty" tt:if="{{!loading && !routines.length}}">还没有计划。点右上角新建一套，或者用模板。</text>
+  </view>
+
+  <view class="sec">
+    <view class="sechead">
+      <text class="k">计划轮换（不排周几，练完自动轮到下一套）</text>
+    </view>
+    <view class="rotchips">
+      <view class="rchip {{rotIds.indexOf(item.id) >= 0 ? 'on' : ''}}" tt:for="{{routines}}" tt:key="id"
+            data-id="{{item.id}}" bindtap="onRotPick">{{item.name}}</view>
+    </view>
+    <text class="hint" tt:if="{{rotOn}}">循环：{{rotNames.join(' → ')}} · 下次：{{rotNames[rotIdx]}}</text>
+    <text class="hint" tt:else>选两套以上才会生效；周安排里排了今天的仍然优先。</text>
+  </view>
+
+  <view class="sec">
+    <view class="sechead">
+      <text class="k">周安排</text>
+    </view>
+    <view class="row" tt:for="{{days}}" tt:key="dow" data-dow="{{item.dow}}" bindtap="onDay">
+      <text class="day">{{item.label}}</text>
+      <text class="names">{{item.names || '休息'}}</text>
+    </view>
+  </view>
+
+  <!-- 周安排：勾选这一天练哪几套 -->
+  <view class="mask" tt:if="{{dayOpen}}" bindtap="onDayClose">
+    <view class="sheet" catchtap="noop">
+      <view class="sheet-head">
+        <text class="sheet-title">{{dayTitle}}练什么</text>
+        <text class="sheet-x" bindtap="onDayClose">×</text>
+      </view>
+      <view class="pick" tt:for="{{dayPick}}" tt:key="id" data-id="{{item.id}}" bindtap="onPick">
+        <text class="pname">{{item.name}}</text>
+        <text class="check">{{item.on ? '✓' : ''}}</text>
+      </view>
+      <view class="savebtn" bindtap="onDaySave">保存这一天</view>
+    </view>
+  </view>
+
+  <!-- 编辑一套 -->
+  <view class="mask" tt:if="{{editOpen}}" bindtap="onEditClose">
+    <view class="sheet" catchtap="noop">
+      <view class="sheet-head">
+        <text class="sheet-title">{{editId ? '改这套' : '新建一套'}}</text>
+        <text class="sheet-x" bindtap="onDelete" tt:if="{{editId}}">删</text>
+      </view>
+      <input class="nameinput" value="{{editName}}" placeholder="这套叫什么（推 / 腿 / 全身）" bindinput="onName" />
+      <input class="nameinput" value="{{editNote}}" placeholder="备注（可空，比如 A 日：大重量低次数）" bindinput="onNote" />
+      <view class="exrow" tt:for="{{editEx}}" tt:key="id">
+        <text class="exname">{{item.name}}</text>
+        <view class="stepper">
+          <text class="sbtn" data-i="{{index}}" data-d="-1" bindtap="onSets">−</text>
+          <text class="sval">{{item.sets}} 组</text>
+          <text class="sbtn" data-i="{{index}}" data-d="1" bindtap="onSets">+</text>
+        </view>
+        <view class="stepper">
+          <text class="sbtn" data-i="{{index}}" data-d="-1" bindtap="onReps">−</text>
+          <text class="sval">{{item.reps}} 次</text>
+          <text class="sbtn" data-i="{{index}}" data-d="1" bindtap="onReps">+</text>
+        </view>
+        <text class="del" data-i="{{index}}" bindtap="onRemoveEx">×</text>
+        <text class="movebtn" tt:if="{{editId}}" data-id="{{editId}}" data-index="{{index}}" data-delta="-1" bindtap="onMove">↑</text>
+        <text class="movebtn" tt:if="{{editId}}" data-id="{{editId}}" data-index="{{index}}" data-delta="1" bindtap="onMove">↓</text>
+        <text class="ss" data-i="{{index}}" bindtap="onSupersetRow">{{item.group ? '超集' : '连'}}</text>
+        <text class="ss" data-i="{{index}}" bindtap="onPyramid">{{item.repsList && item.repsList.length ? '金字塔' : '固定'}}</text>
+        <text class="ss" data-i="{{index}}" bindtap="onWeightLadder">{{item.weightList && item.weightList.length ? '重量递增' : '同重'}}</text>
+        <text class="ss" data-i="{{index}}" bindtap="onMode">{{item.mode === 'time' ? '按秒' : '按次'}}</text>
+        <text class="ss" data-i="{{index}}" bindtap="onPerSide">{{item.perSide ? '每边' : '双边'}}</text>
+        <text class="ss {{item.prog && item.prog !== 'off' ? 'on' : ''}}" data-i="{{index}}" bindtap="onProg">{{item.prog === 'linear' ? '线性' : (item.prog === 'double' ? '双重' : '进阶')}}</text>
+      </view>
+      <view class="addrow" bindtap="onAddOpen">+ 添加动作</view>
+      <view class="savebtn" bindtap="onSaveRoutine">保存</view>
+    </view>
+  </view>
+
+  <!-- 加动作：搜索 -->
+  <view class="mask" tt:if="{{addOpen}}" bindtap="onAddClose">
+    <view class="sheet" catchtap="noop">
+      <view class="sheet-head">
+        <text class="sheet-title">添加动作</text>
+        <text class="sheet-x" bindtap="onAddClose">×</text>
+      </view>
+      <input class="nameinput" value="{{addQ}}" placeholder="搜动作：卧推 / 深蹲 / row" bindinput="onAddInput" />
+      <scroll-view scroll-y class="addlist">
+        <view class="pick" tt:for="{{addList}}" tt:key="id" data-id="{{item.id}}" data-name="{{item.name}}" bindtap="onAddPick">
+          <text class="pname">{{item.name}}</text>
+          <text class="psub">{{item.bpZh}} · {{item.eqZh}}</text>
+        </view>
+      </scroll-view>
+      <text class="empty" tt:if="{{addLoading}}">搜索中…</text>
+    </view>
+  </view>
+</view>

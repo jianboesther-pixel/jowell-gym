@@ -1,0 +1,307 @@
+<view class="wrap">
+  <view class="hd">
+    <view class="hrow">
+      <text class="h1">动作</text>
+      <view class="hbtns">
+        <view class="mbtn" bindtap="onToggleView">{{view === 'list' ? '卡片' : '列表'}}</view>
+        <view class="mbtn" bindtap="onMuscles">按肌肉</view>
+      </view>
+    </view>
+    <text class="sub">{{onlyNotes ? '教练讲解 · 当前 ' + noteItems.length + ' 个' : total + ' 个带动作的动作'}}</text>
+  </view>
+
+  <view class="coachcard {{onlyNotes ? 'on' : ''}}" bindtap="onToggleNotes">
+    <view class="cc-l">
+      <text class="cc-t">教练讲解</text>
+      <text class="cc-s">{{onlyNotes ? '当前筛选 ' + noteItems.length + ' 个' : notesCoaches + ' · ' + notesCount + ' 个动作带讲解'}}</text>
+    </view>
+    <view class="cc-r">{{onlyNotes ? '退出' : '查看'}}</view>
+  </view>
+
+  <view class="searchwrap">
+    <input class="search" value="{{q}}" placeholder="搜索…" bindinput="onInput" />
+    <text class="scount" tt:if="{{q || bp || cat || eq}}">{{total}}</text>
+  </view>
+
+  <view class="eqbanner" tt:if="{{equip && equip.active}}">
+    <text class="eqtext">{{equip.on ? '只显示「' + equip.active.name + '」里有的器械' : '显示全部器械'}}</text>
+    <view class="eqbtn" bindtap="onEquipToggle">{{equip.on ? '显示全部' : '按档案筛选'}}</view>
+  </view>
+
+  <block tt:if="{{!onlyNotes}}">
+    <scroll-view scroll-x class="chips">
+      <view class="chip {{!bp ? 'on' : ''}}" data-f="bp" bindtap="onAll">全部</view>
+      <view class="chip {{bp === item.key ? 'on' : ''}}" tt:for="{{parts}}" tt:key="key" data-f="bp" data-k="{{item.key}}" bindtap="onPick">{{item.zh}}</view>
+    </scroll-view>
+    <scroll-view scroll-x class="chips">
+      <view class="chip {{!cat ? 'on' : ''}}" data-f="cat" bindtap="onAll">任何类型</view>
+      <view class="chip {{cat === item.key ? 'on' : ''}}" tt:for="{{cats}}" tt:key="key" data-f="cat" data-k="{{item.key}}" bindtap="onPick">{{item.zh}}</view>
+    </scroll-view>
+    <scroll-view scroll-x class="chips">
+      <view class="chip {{!eq ? 'on' : ''}}" data-f="eq" bindtap="onAll">任何器械</view>
+      <view class="chip {{eq === item.key ? 'on' : ''}}" tt:for="{{gear}}" tt:key="key" data-f="eq" data-k="{{item.key}}" bindtap="onPick">{{item.zh}}</view>
+    </scroll-view>
+  </block>
+
+  <view class="sec" tt:if="{{!onlyNotes && !q && allGroups.length}}">
+    <text class="sech">专题 · 按部位，点开看</text>
+    <view class="partchips">
+      <view class="chip {{openPart === g.part ? 'on' : ''}}" tt:for="{{allGroups}}" tt:for-item="g" tt:key="part"
+            data-part="{{g.part}}" bindtap="onPartToggle">{{g.part}} {{g.items.length}}</view>
+    </view>
+    <block tt:if="{{openPart}}">
+      <block tt:for="{{allGroups}}" tt:for-item="g" tt:key="part">
+        <block tt:if="{{g.part === openPart}}">
+          <view class="trow" tt:for="{{g.items}}" tt:for-item="tp2" tt:key="id" data-id="{{tp2.id}}" bindtap="onTopic">
+            <view class="tplay">▶</view>
+            <view class="tl">
+              <text class="tt">{{tp2.title}}</text>
+              <text class="ts">{{tp2.coach}} · 专题</text>
+            </view>
+            <text class="chev">›</text>
+          </view>
+        </block>
+      </block>
+    </block>
+  </view>
+
+  <view class="sec" tt:if="{{!onlyNotes && showTopics}}">
+    <text class="sech">{{q ? '相关专题' : '专题'}}</text>
+    <view class="trow" tt:for="{{topicList}}" tt:key="id" data-id="{{item.id}}" bindtap="onTopic">
+      <view class="tplay">▶</view>
+      <view class="tl">
+        <text class="tt">{{item.title}}</text>
+        <text class="ts">{{item.coach}} · 专题</text>
+      </view>
+      <text class="chev">›</text>
+    </view>
+  </view>
+
+  <text class="err" tt:if="{{err}}" bindtap="load">{{err}} · 点这里重试</text>
+
+  <block tt:if="{{onlyNotes}}">
+    <view class="sec" tt:if="{{topicGroups.length}}">
+      <text class="sech">专题 · 按部位，点开看</text>
+      <view class="partchips">
+        <view class="chip {{openPart === g.part ? 'on' : ''}}" tt:for="{{topicGroups}}" tt:for-item="g" tt:key="part"
+              data-part="{{g.part}}" bindtap="onPartToggle">{{g.part}} {{g.items.length}}</view>
+      </view>
+      <block tt:if="{{openPart}}">
+        <block tt:for="{{topicGroups}}" tt:for-item="g" tt:key="part">
+          <block tt:if="{{g.part === openPart}}">
+            <view class="trow" tt:for="{{g.items}}" tt:for-item="tp2" tt:key="id" data-id="{{tp2.id}}" bindtap="onTopic">
+              <view class="tplay">▶</view>
+              <view class="tl">
+                <text class="tt">{{tp2.title}}</text>
+                <text class="ts">{{tp2.coach}} · 专题</text>
+              </view>
+              <text class="chev">›</text>
+            </view>
+          </block>
+        </block>
+      </block>
+    </view>
+    <view class="sec" tt:for="{{noteGroups}}" tt:for-item="g" tt:key="coach">
+      <text class="sech">{{g.coach}} · {{g.items.length}} 个动作</text>
+      <view class="row" tt:for="{{g.items}}" tt:for-item="it" tt:key="id" data-id="{{it.id}}" data-note="{{it.noteOnly}}" bindtap="onNoteRow">
+        <image class="thumb" tt:if="{{it.imgData}}" src="{{it.imgData}}" mode="aspectFit" />
+        <view class="thumb" tt:else></view>
+        <view class="rl">
+          <text class="rn">{{it.name}}</text>
+          <text class="rs" tt:if="{{it.noteOnly}}">{{it.coaches[0] || '教练'}} · 讲解</text>
+          <text class="rs" tt:else>{{it.tgZh}} · {{it.eqZh}}</text>
+        </view>
+        <text class="tag">{{it.noteOnly ? '讲解' : '讲'}}</text>
+      </view>
+    </view>
+    <text class="empty" tt:if="{{!noteGroups.length}}">没找到，换个词试试</text>
+  </block>
+
+  <block tt:if="{{!onlyNotes && view === 'cards'}}">
+    <view class="grid">
+      <view class="card" tt:for="{{items}}" tt:key="id" data-id="{{item.id}}" bindtap="onOpen">
+        <image class="thumb2" tt:if="{{item.imgData}}" src="{{item.imgData}}" mode="aspectFit" />
+        <view class="thumb2" tt:else></view>
+        <text class="cname">{{item.name}}</text>
+        <text class="cen">{{item.en}}</text>
+        <text class="cmeta">{{item.tgZh}} · {{item.eqZh}}</text>
+      </view>
+    </view>
+    <view class="more" tt:if="{{hasMore}}" bindtap="onMore">{{loading ? '加载中…' : '显示更多'}}</view>
+    <text class="empty" tt:if="{{!loading && !items.length}}">没有匹配</text>
+    <view class="sec" tt:if="{{similar.length}}">
+      <text class="sech">没有精确匹配，这些比较接近</text>
+      <view class="row" tt:for="{{similar}}" tt:key="id" data-id="{{item.id}}" bindtap="onOpen">
+        <view class="thumb"></view>
+        <view class="rl">
+          <text class="rn">{{item.name}}</text>
+          <text class="rs">{{item.tgZh}} · {{item.eqZh}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <block tt:if="{{!onlyNotes && view !== 'cards'}}">
+    <view class="newrow" bindtap="onCreateOpen">
+      <view class="plus">＋</view>
+      <view class="rl">
+        <text class="rn">创建自己的动作</text>
+        <text class="rs">名字 + 身体部位</text>
+      </view>
+    </view>
+    <view class="row" tt:for="{{items}}" tt:key="id" data-id="{{item.id}}" bindtap="onOpen">
+      <image class="thumb" tt:if="{{item.imgData}}" src="{{item.imgData}}" mode="aspectFit" />
+      <view class="thumb" tt:else></view>
+      <view class="rl">
+        <text class="rn">{{item.name}}</text>
+        <text class="rs">{{item.tgZh}} · {{item.eqZh}}</text>
+      </view>
+      <text class="tag" tt:if="{{item.hasNote}}">讲</text>
+      <text class="tag acc" tt:if="{{item.best > 0}}">{{item.best}}</text>
+      <text class="star {{item.fav ? 'on' : ''}}" data-id="{{item.id}}" catchtap="onStar">{{item.fav ? '★' : '☆'}}</text>
+      <view class="planbtn" data-id="{{item.id}}" catchtap="onPlanOpen">计划</view>
+    </view>
+    <view class="more" tt:if="{{hasMore}}" bindtap="onMore">{{loading ? '加载中…' : '显示更多'}}</view>
+    <text class="empty" tt:if="{{!loading && !items.length}}">没有匹配</text>
+  </block>
+
+  <view class="mask" tt:if="{{infoOpen}}" bindtap="onClose">
+    <view class="sheet" catchtap="noop">
+      <view class="sheet-head">
+        <text class="sheet-title">{{info.name || '动作'}}</text>
+        <text class="sheet-x" bindtap="onClose">×</text>
+      </view>
+      <text class="sheet-state" tt:if="{{infoLoading}}">加载中…</text>
+      <block tt:else>
+        <video class="infoimg" tt:if="{{(info.clipData || info.clipUrl) && !videoErr}}" src="{{info.videoSrc}}"
+               autoplay="{{false}}" loop="{{true}}" controls="{{true}}" muted="{{true}}"
+               show-center-play-btn="{{true}}" object-fit="contain" binderror="onVideoErr"></video>
+        <text class="vplayhint" tt:if="{{(info.clipData || info.clipUrl) && !videoErr}}">点一下播放 · 循环</text>
+        <image class="infoimg" tt:if="{{(!info.clipData && !info.clipUrl || videoErr) && (info.imgData || !imgErr)}}" src="{{info.imgData || (useWebp ? info.webpUrl : info.jpgUrl)}}" mode="aspectFit" binderror="onImgErr" />
+        <view class="infofallback" tt:if="{{imgErr}}" bindtap="onImgRetry">
+          <text class="ifb-name">{{info.name}}</text>
+          <text class="ifb-sub">{{info.bpZh}} · {{info.eqZh}}</text>
+        </view>
+        <view class="animoff" tt:if="{{animOff}}" bindtap="onEnableAnim">示范动画在设置里关掉了 · 点这里打开</view>
+        <view class="inforow"><text class="infokey">部位</text><text>{{info.bpZh || info.bp}}</text></view>
+        <view class="inforow"><text class="infokey">器械</text><text>{{info.eqZh || info.eq}}</text></view>
+        <view class="inforow"><text class="infokey">英文名</text><text>{{info.en}}</text></view>
+
+        <view class="notes" tt:if="{{info.notes && info.notes.length}}">
+          <view class="note" tt:for="{{info.notes}}" tt:for-item="n" tt:key="title">
+            <text class="notet">{{n.title || '讲解'}} · {{n.coach}}</text>
+            <text class="noted">{{n.summary}}</text>
+            <view class="notekey" tt:for="{{n.key}}" tt:for-item="k" tt:key="text">
+              <text class="kd">·</text>
+              <text class="kt">{{k.text}}</text>
+            </view>
+            <view class="notem" tt:for="{{n.mistakes}}" tt:for-item="m" tt:key="mistake">
+              <text class="km">常见错误：{{m.mistake}}</text>
+              <text class="kf">改法：{{m.fix}}</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="steps" tt:if="{{info.steps && info.steps.length}}">
+          <text class="stepsk">要领</text>
+          <view class="step" tt:for="{{info.steps}}" tt:key="*this">
+            <text class="stepn">{{index + 1}}</text>
+            <text class="stept">{{item}}</text>
+          </view>
+        </view>
+
+        <view class="actions">
+          <view class="btn ghost" tt:if="{{info.notes && info.notes.length && info.notes[0].source}}" hover-class="pressed"
+                data-url="{{info.notes[0].source.url}}" bindtap="openSource">看原视频</view>
+          <view class="btn" hover-class="pressed" bindtap="onFree">练这个</view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <view class="mask" tt:if="{{createOpen}}" bindtap="onCreateClose">
+    <view class="sheet" catchtap="noop">
+      <view class="sheet-head">
+        <text class="sheet-title">创建自己的动作</text>
+        <text class="sheet-x" bindtap="onCreateClose">×</text>
+      </view>
+      <input class="nameinput" value="{{customName}}" placeholder="动作名（比如：我的推胸）" bindinput="onCreateInput" />
+      <text class="sech">身体部位</text>
+      <view class="partchips">
+        <view class="chip {{customBp === item.key ? 'on' : ''}}" tt:for="{{customParts}}" tt:key="key"
+              data-k="{{item.key}}" bindtap="onBpPick">{{item.zh}}</view>
+      </view>
+      <view class="savebtn" bindtap="onCreateSave">{{saving ? '保存中…' : '创建'}}</view>
+    </view>
+  </view>
+
+  <view class="mask" tt:if="{{mineOpen}}" bindtap="onMineClose">
+    <view class="sheet" catchtap="noop">
+      <view class="sheet-head">
+        <text class="sheet-title">{{mine.name}}</text>
+        <text class="sheet-x" bindtap="onMineClose">×</text>
+      </view>
+      <view class="inforow"><text class="infokey">部位</text><text>{{mine.bpZh}}</text></view>
+      <view class="inforow"><text class="infokey">来源</text><text>自己加的</text></view>
+      <view class="actions">
+        <view class="btn danger" hover-class="pressed" bindtap="onMineDelete">删掉这个动作</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="mask" tt:if="{{planOpen}}" bindtap="onPlanClose">
+    <view class="sheet" catchtap="noop">
+      <view class="sheet-head">
+        <text class="sheet-title">加入哪套计划</text>
+        <text class="sheet-x" bindtap="onPlanClose">×</text>
+      </view>
+      <view class="prow" tt:for="{{planRoutines}}" tt:key="id" data-id="{{item.id}}" bindtap="onPlanPick">
+        <text class="pname">{{item.name}}</text>
+        <text class="pcount">{{item.ex.length}} 个动作</text>
+      </view>
+      <text class="empty" tt:if="{{!planRoutines.length}}">还没有计划，先去「我的计划」新建一套</text>
+    </view>
+  </view>
+
+  <view class="mask" tt:if="{{noteSheetOpen}}" bindtap="onNoteSheetClose">
+    <view class="sheet" catchtap="noop">
+      <view class="sheet-head">
+        <text class="sheet-title">{{noteSheet ? (noteSheet.title || '讲解') : '讲解'}}</text>
+        <text class="sheet-x" bindtap="onNoteSheetClose">×</text>
+      </view>
+      <text class="sheet-state" tt:if="{{noteSheetLoading}}">加载中…</text>
+      <block tt:else>
+        <text class="tcoach">{{noteSheet.coach}}</text>
+        <text class="tsummary">{{noteSheet.summary}}</text>
+        <view class="titem" tt:for="{{noteSheet.key}}" tt:key="text">
+          <text class="kd">·</text>
+          <text class="kt">{{item.text}}</text>
+        </view>
+        <view class="actions" tt:if="{{noteSheet.source}}">
+          <view class="btn ghost" hover-class="pressed" data-url="{{noteSheet.source.url}}" bindtap="openSource">看原视频</view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <view class="mask" tt:if="{{topicOpen}}" bindtap="onTopicClose">
+    <view class="sheet" catchtap="noop">
+      <view class="sheet-head">
+        <text class="sheet-title">{{topic.title || '专题'}}</text>
+        <text class="sheet-x" bindtap="onTopicClose">×</text>
+      </view>
+      <text class="sheet-state" tt:if="{{topicLoading}}">加载中…</text>
+      <block tt:else>
+        <text class="tcoach">{{topic.coach}} · 专题</text>
+        <text class="tsummary">{{topic.summary}}</text>
+        <view class="tsec" tt:for="{{topic.sections}}" tt:for-item="s" tt:key="title">
+          <text class="tsech">{{s.title}}</text>
+          <view class="titem" tt:for="{{s.items}}" tt:for-item="x" tt:key="*this">
+            <text class="kd">·</text>
+            <text class="kt">{{x}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>

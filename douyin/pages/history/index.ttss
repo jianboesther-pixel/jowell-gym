@@ -1,0 +1,124 @@
+page {
+  background: #f7f6f3;
+  color: #0e0e0e;
+}
+.page {
+  min-height: 100vh;
+  padding: 40rpx 36rpx calc(40rpx + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+}
+.hd {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 28rpx;
+}
+.h1 {
+  font-size: 44rpx;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+.sub {
+  font-size: 24rpx;
+  color: #8a8577;
+}
+.empty {
+  font-size: 26rpx;
+  color: #8a8577;
+  padding: 40rpx 0;
+  line-height: 1.6;
+}
+.item {
+  background: #fffefc;
+  border-radius: 24rpx;
+  padding: 24rpx 26rpx;
+  margin-bottom: 14rpx;
+}
+.row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.name {
+  font-size: 32rpx;
+  font-weight: 600;
+}
+.date {
+  font-size: 24rpx;
+  color: #8a8577;
+  font-variant-numeric: tabular-nums;
+}
+.meta {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #6f6a5f;
+  font-variant-numeric: tabular-nums;
+}
+.exs {
+  margin-top: 16rpx;
+  border-top: 1rpx solid #232830;
+  padding-top: 12rpx;
+}
+.exrow {
+  display: flex;
+  justify-content: space-between;
+  gap: 16rpx;
+  padding: 6rpx 0;
+}
+.exname {
+  font-size: 24rpx;
+  color: #3d3b35;
+  flex: 0 1 auto;
+}
+.exsets {
+  font-size: 24rpx;
+  color: #8a8577;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.hl { display: flex; flex-direction: column; gap: 6rpx; }
+.logbtn {
+  font-size: 22rpx;
+  color: #6f6a5f;
+  border: 1rpx solid #d8d3c6;
+  border-radius: 999rpx;
+  padding: 10rpx 22rpx;
+}
+.search {
+  margin-bottom: 22rpx;
+  padding: 20rpx 24rpx;
+  border: 1rpx solid #e4e3df;
+  background: #fffefc;
+  font-size: 24rpx;
+}
+.glabel {
+  display: block;
+  margin: 8rpx 0 12rpx;
+  font-size: 20rpx;
+  letter-spacing: 6rpx;
+  color: #8a8577;
+}
+.grp { margin-bottom: 10rpx; }
+.err { display: block; margin: 12rpx 0; font-size: 22rpx; color: #b0231b; }
+.del {
+  display: block;
+  margin-top: 10rpx;
+  font-size: 20rpx;
+  color: #b0231b;
+  text-align: right;
+}
+
+.exleft { display: flex; align-items: center; gap: 10rpx; }
+.prbadge {
+  font-size: 16rpx;
+  color: #b0231b;
+  border: 1rpx solid #b0231b;
+  border-radius: 4rpx;
+  padding: 0 8rpx;
+}
+.prtag { color: #b0231b; }
+
+.exright { display: flex; flex-direction: column; align-items: flex-end; gap: 4rpx; }
+.exwarm { font-size: 18rpx; color: #8a8577; }
+.exnote { font-size: 18rpx; color: #6f6a5f; }

@@ -1,0 +1,10 @@
+{
+  "name": "opengym-douyin",
+  "private": true,
+  "version": "0.1.0",
+  "type": "commonjs",
+  "description": "openGym 抖音小程序 demo：半屏训练面板（组 / 休息 / 下一组）",
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  }
+}

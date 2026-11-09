@@ -1,0 +1,84 @@
+<view class="wrap">
+  <text class="word">设置</text>
+  <text class="err" tt:if="{{err}}" bindtap="load">{{err}} · 点这里重试</text>
+
+  <view class="sec">
+    <text class="k">训练</text>
+    <view class="row"><text class="lk">默认休息</text></view>
+    <view class="chips">
+      <view class="chip {{restSec === item ? 'on' : ''}}" tt:for="{{restChoices}}" tt:key="*this"
+            data-sec="{{item}}" bindtap="onRest">{{item === 0 ? '关' : item + 's'}}</view>
+    </view>
+
+    <view class="row"><text class="lk">休息暂停</text><text class="lv">{{restPauseSec}}s</text></view>
+    <view class="chips">
+      <view class="chip {{restPauseSec === item ? 'on' : ''}}" tt:for="{{pauseChoices}}" tt:key="*this"
+            data-sec="{{item}}" bindtap="onPause">{{item}}s</view>
+    </view>
+
+    <view class="srow" data-f="keepAwake" bindtap="onToggle">
+      <view class="sl"><text class="lk">训练时保持屏幕常亮</text><text class="sh">面板不被手机自动锁屏</text></view>
+      <view class="sw {{keepAwake ? 'on' : ''}}"><view class="knob"></view></view>
+    </view>
+    <view class="srow" data-f="animations" bindtap="onToggle">
+      <view class="sl"><text class="lk">动作示范动画</text><text class="sh">关闭后详情只显示静图</text></view>
+      <view class="sw {{animations ? 'on' : ''}}"><view class="knob"></view></view>
+    </view>
+    <view class="srow" data-f="sound" bindtap="onToggle">
+      <view class="sl"><text class="lk">提示音</text><text class="sh">休息结束响一声「叮」</text></view>
+      <view class="sw {{sound ? 'on' : ''}}"><view class="knob"></view></view>
+    </view>
+    <view class="srow" data-f="vibrate" bindtap="onToggle">
+      <view class="sl"><text class="lk">震动反馈</text><text class="sh">记一组、到点提醒时震一下</text></view>
+      <view class="sw {{vibrate ? 'on' : ''}}"><view class="knob"></view></view>
+    </view>
+    <view class="srow" data-f="collapseDone" bindtap="onToggle">
+      <view class="sl"><text class="lk">跳过已经练完的动作</text><text class="sh">切换下一个动作时，自动跳过做满的</text></view>
+      <view class="sw {{collapseDone ? 'on' : ''}}"><view class="knob"></view></view>
+    </view>
+    <view class="srow" data-f="effort" bindtap="onToggle">
+      <view class="sl"><text class="lk">记录力竭感</text><text class="sh">每组标一下还剩几次的余力</text></view>
+      <view class="sw {{effort ? 'on' : ''}}"><view class="knob"></view></view>
+    </view>
+  </view>
+
+  <view class="sec">
+    <text class="k">单位与格式</text>
+    <view class="srow">
+      <view class="sl"><text class="lk">重量单位</text><text class="sh">切换会把所有记录一起换算</text></view>
+      <view class="seg">
+        <view class="opt {{unit === 'kg' ? 'on' : ''}}" data-unit="kg" bindtap="onUnit">kg</view>
+        <view class="opt {{unit === 'lb' ? 'on' : ''}}" data-unit="lb" bindtap="onUnit">lb</view>
+      </view>
+    </view>
+    <view class="srow">
+      <view class="sl"><text class="lk">重量小数位</text><text class="sh">显示用，不改变存储</text></view>
+      <view class="seg">
+        <view class="opt {{wdec === item ? 'on' : ''}}" tt:for="{{decChoices}}" tt:key="*this"
+              data-n="{{item}}" bindtap="onDec">{{item}}</view>
+      </view>
+    </view>
+    <view class="srow" data-f="weekStart" bindtap="onToggle">
+      <view class="sl"><text class="lk">周一作为一周开始</text><text class="sh">关掉则周日开始</text></view>
+      <view class="sw {{weekStart ? 'on' : ''}}"><view class="knob"></view></view>
+    </view>
+  </view>
+
+  <view class="sec">
+    <text class="k">器械档案（决定动作库里"我能不能做"）</text>
+    <input class="eqname" value="{{equipName}}" placeholder="档案名（家里 / 健身房）" bindinput="onEquipName" />
+    <view class="chips">
+      <view class="chip {{equipPick.indexOf(item.key) >= 0 ? 'on' : ''}}" tt:for="{{equipOptions}}" tt:key="key"
+            data-k="{{item.key}}" bindtap="onEquipToggleItem">{{item.zh}}</view>
+    </view>
+    <view class="savebtn ghost" bindtap="onEquipSave">保存器械档案</view>
+  </view>
+
+  <view class="sec">
+    <text class="k">账号</text>
+    <view class="row"><text class="lk">名字</text><text class="lv">{{name || '—'}}</text></view>
+    <view class="row"><text class="lk">抖音身份</text><text class="lv">{{name ? '已绑定' : '未绑定'}}</text></view>
+    <text class="hint" tt:if="{{appId}}">AppID {{appId}}</text>
+    <text class="hint">构建 {{build}}</text>
+  </view>
+</view>

@@ -1,0 +1,78 @@
+page {
+  background: #f7f6f3;
+  color: #0e0e0e;
+}
+.wrap {
+  min-height: 100vh;
+  padding: 48rpx 40rpx calc(40rpx + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+}
+.word { font-size: 22rpx; letter-spacing: 10rpx; color: #8a8577; }
+.err { display: block; margin-top: 16rpx; font-size: 22rpx; color: #b0231b; }
+
+.daterow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: 24rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 2rpx solid #0e0e0e;
+}
+.dlabel { font-size: 20rpx; letter-spacing: 4rpx; color: #8a8577; }
+.dval { font-size: 26rpx; font-family: "Songti SC", serif; font-weight: 700; }
+
+.group { margin-top: 20rpx; }
+.ghead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid #e4e3df;
+}
+.gname { font-size: 26rpx; }
+.gchev { font-size: 26rpx; color: #8a8577; }
+
+.frow {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 12rpx 0 12rpx 16rpx;
+}
+.flabel { width: 140rpx; font-size: 24rpx; color: #3d3b35; }
+.finput {
+  flex: 1;
+  padding: 14rpx 16rpx;
+  border: 1rpx solid #e4e3df;
+  background: #fffefc;
+  font-size: 24rpx;
+}
+.funit { font-size: 18rpx; color: #8a8577; width: 44rpx; }
+.fdelta { font-size: 18rpx; width: 60rpx; text-align: right; }
+.fdelta.up { color: #b0231b; }
+.fdelta.down { color: #2f6b3a; }
+
+.savebtn {
+  margin-top: 30rpx;
+  text-align: center;
+  background: #0e0e0e;
+  color: #f7f6f3;
+  font-size: 26rpx;
+  letter-spacing: 6rpx;
+  padding: 26rpx 0;
+}
+
+.sec { margin-top: 44rpx; }
+.sech { display: block; font-size: 20rpx; letter-spacing: 6rpx; color: #8a8577; margin-bottom: 12rpx; }
+.hrow {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid #e4e3df;
+}
+.hl { width: 180rpx; display: flex; align-items: center; gap: 10rpx; }
+.hd { font-size: 24rpx; font-variant-numeric: tabular-nums; }
+.hn { font-size: 16rpx; color: #b0231b; }
+.hv { flex: 1; font-size: 22rpx; color: #6f6a5f; }
+.hdel { font-size: 20rpx; color: #b0231b; }
+.empty { display: block; margin-top: 24rpx; font-size: 22rpx; color: #8a8577; }

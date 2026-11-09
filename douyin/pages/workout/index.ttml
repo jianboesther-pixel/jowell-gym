@@ -1,0 +1,300 @@
+<view class="page {{compact ? 'compact' : ''}}">
+  <view class="head" tt:if="{{!compact}}">
+    <view class="daywrap">
+      <text class="day">{{planName}}</text>
+      <text class="day-sub">动作 {{exNo}} / {{exCount}} · {{totalLine}} 组完成</text>
+    </view>
+    <text class="cue">{{cue}}</text>
+    <text class="who" tt:if="{{userName}}">已登录 · {{userName}}</text>
+    <text class="next-ex" tt:if="{{nextName}}">下一个：{{nextName}}</text>
+  </view>
+
+  <view class="panel {{mini ? 'mini' : ''}}" bindtouchstart="onPanelTouchStart" bindtouchmove="onPanelTouchMove">
+    <view class="grabber" bindtap="onToggleMini"></view>
+
+    <!-- 收起态：只留倒计时和下一组，把屏幕让给视频 -->
+    <block tt:if="{{mini}}">
+      <view class="minibar" bindtap="onToggleMini">
+        <text class="mclock">{{miniText}}</text>
+        <text class="mnext" tt:if="{{miniNext}}">{{miniNext}}</text>
+        <text class="mchev">▴</text>
+      </view>
+    </block>
+
+    <block tt:else>
+      <!-- 待完成 / 休息中 -->
+      <block tt:if="{{state === 'set' || state === 'rest'}}">
+        <view class="exhead">
+          <text class="name" bindtap="onInfo">{{title}}</text>
+          <text class="ssbadge" tt:if="{{ssOn}}">超集 · {{ssWith}}</text>
+          <text class="ssbadge" tt:if="{{perSide}}">每边</text>
+        </view>
+        <text class="lastline" tt:if="{{lastLine}}">{{lastLine}}</text>
+        <view class="setrow">
+          <text class="setline">{{setLine}}</text>
+          <text class="clock {{state === 'rest' ? '' : 'dim'}}" tt:if="{{state === 'rest'}}">{{left}}</text>
+        </view>
+
+        <view class="row1">
+          <view class="mini">
+            <view class="mbtn" hover-class="pressed" bindtap="onWeightMinus">−</view>
+            <text class="mval" bindtap="onNumOpen">{{weight}}<text class="munit">kg</text></text>
+            <view class="mbtn" hover-class="pressed" bindtap="onWeightPlus">+</view>
+          </view>
+          <view class="mini">
+            <view class="mbtn" hover-class="pressed" bindtap="onMinus">−</view>
+            <text class="mval" bindtap="onNumOpen">{{reps}}<text class="munit">{{isTime ? '秒' : '次'}}</text></text>
+            <view class="mbtn" hover-class="pressed" bindtap="onPlus">+</view>
+          </view>
+          <view class="rirrow" tt:if="{{effortOn}}">
+            <text class="rirlabel">余力</text>
+            <view class="rirchip {{rir === item ? 'on' : ''}}" tt:for="{{rirChoices}}" tt:key="*this"
+                  data-n="{{item}}" bindtap="onRir">{{item === 5 ? '5+' : item}}</view>
+            <text class="rpe">{{rir === null ? 'RPE 不记' : 'RPE ' + (10 - rir)}}</text>
+          </view>
+          <view class="btn primary go" hover-class="pressed" bindtap="onFinish">完成这组</view>
+        </view>
+
+        <view class="actions sub">
+          <view class="btn ghost" hover-class="pressed" bindtap="onWarm">热身</view>
+          <view class="btn ghost" hover-class="pressed" bindtap="onDropSet">递减</view>
+          <view class="btn ghost" hover-class="pressed" bindtap="onAddSet">加一组</view>
+          <view class="btn ghost" hover-class="pressed" bindtap="onNext">下一个</view>
+          <view class="btn ghost" hover-class="pressed" bindtap="onMoreOpen">更多</view>
+        </view>
+
+        <view class="actions sub" tt:if="{{state === 'rest'}}">
+          <view class="btn ghost" hover-class="pressed" bindtap="onSkip">跳过休息</view>
+          <view class="btn ghost" hover-class="pressed" bindtap="onRestMinus">−30 秒</view>
+          <view class="btn ghost" hover-class="pressed" bindtap="onRestPlus">+30 秒</view>
+        </view>
+      </block>
+
+      <!-- 本动作完成 -->
+      <block tt:elif="{{state === 'exerciseDone'}}">
+        <view class="rest">
+          <text class="left mid">完成</text>
+          <text class="next">这个动作练完了 · {{nextName || '最后一个'}}</text>
+        </view>
+        <view class="actions">
+          <view class="btn primary" hover-class="pressed" bindtap="onNext">下一个动作</view>
+          <view class="btn ghost" hover-class="pressed" bindtap="onAddSet">再加一组</view>
+          <view class="btn ghost" hover-class="pressed" bindtap="onMoreOpen">更多</view>
+        </view>
+      </block>
+
+      <!-- 整场结束 -->
+      <block tt:else>
+        <view class="rest">
+          <text class="left mid">收工</text>
+          <text class="next">今天完成 {{totalLine}}</text>
+        </view>
+        <view class="actions">
+          <view class="btn ghost" hover-class="pressed" bindtap="onRestart">再来一次</view>
+          <view class="btn ghost" hover-class="pressed" bindtap="onHistory">看历史</view>
+        </view>
+      </block>
+    </block>
+
+    <view class="foot">
+      <text class="footl link" tt:if="{{logged && !linked}}" bindtap="onBind">已有账号？绑定</text>
+      <text class="footl warn" tt:elif="{{loginErr}}" bindtap="onRetry">登录失败 · {{loginErr}}，点这里重试</text>
+      <text class="footl warn" tt:elif="{{loadErr}}" bindtap="onReloadPlan">计划没加载 · 点这里重试</text>
+      <text class="footl link" tt:elif="{{logged && state !== 'finished'}}" bindtap="onEndSession">{{recorded > 0 ? '结束训练 · 已记 ' + recorded + ' 组' : '结束训练'}}</text>
+      <text class="footl" tt:else>{{foot}}</text>
+      <view class="footrow">
+        <text class="hlink" tt:if="{{logged && state !== 'finished'}}" bindtap="onFree">随便练</text>
+        <text class="hlink" bindtap="onPlan">改计划</text>
+        <text class="hlink" bindtap="onHistory">历史</text>
+      </view>
+    </view>
+
+    <!-- ===== 弹层 ===== -->
+    <view class="mask" tt:if="{{moreOpen}}" bindtap="onMoreClose">
+      <view class="sheet" catchtap="noop">
+        <view class="sheet-head">
+          <text class="sheet-title">更多</text>
+          <text class="sheet-x" bindtap="onMoreClose">×</text>
+        </view>
+        <view class="menurow" bindtap="onNext">跳过这个动作，直接下一个</view>
+        <view class="menurow" bindtap="onFocusToggle">专注模式</view>
+        <view class="menurow" bindtap="onNoteOpen">给这个动作写备注</view>
+        <view class="menurow" bindtap="onPlatesOpen">杠铃片计算</view>
+        <view class="menurow" bindtap="onSuperset">{{ssOn ? '拆掉超集' : '和下一个动作做超集'}}</view>
+        <view class="menurow" bindtap="onSwap">换一个动作</view>
+        <view class="menurow" bindtap="onExMenu">调顺序 / 删除动作</view>
+      </view>
+    </view>
+
+    <view class="mask" tt:if="{{menuOpen}}" bindtap="onExMenuClose">
+      <view class="sheet" catchtap="noop">
+        <view class="sheet-head">
+          <text class="sheet-title">{{title}}</text>
+          <text class="sheet-x" bindtap="onExMenuClose">×</text>
+        </view>
+        <view class="menurow" bindtap="onSetToWarm">把刚记的组改成热身</view>
+        <view class="menurow" bindtap="onExUp">上移一个动作</view>
+        <view class="menurow" bindtap="onExDown">下移一个动作</view>
+        <view class="menurow" bindtap="onSwap">换一个动作</view>
+        <view class="menurow danger" bindtap="onExRemove">从这次训练里删掉</view>
+      </view>
+    </view>
+
+    <view class="mask" tt:if="{{numOpen}}" bindtap="onNumClose">
+      <view class="sheet" catchtap="noop">
+        <view class="sheet-head">
+          <text class="sheet-title">直接输入</text>
+          <view class="sheet-acts">
+            <text class="sheet-ok" bindtap="onNumSave">应用</text>
+            <text class="sheet-x" bindtap="onNumClose">×</text>
+          </view>
+        </view>
+        <view class="prow">
+          <text class="plab">重量</text>
+          <input class="pinput" type="digit" value="{{numW}}" bindinput="onNumW" adjust-position cursor-spacing="120" confirm-type="done" />
+          <text class="punit">kg</text>
+        </view>
+        <view class="prow">
+          <text class="plab">{{isTime ? '秒数' : '次数'}}</text>
+          <input class="pinput" type="digit" value="{{numR}}" bindinput="onNumR" adjust-position cursor-spacing="120" confirm-type="done" />
+          <text class="punit">{{isTime ? '秒' : '次'}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="mask" tt:if="{{noteOpen}}" bindtap="onNoteClose">
+      <view class="sheet" catchtap="noop">
+        <view class="sheet-head">
+          <text class="sheet-title">这个动作的备注</text>
+          <view class="sheet-acts">
+            <text class="sheet-ok" bindtap="onNoteSave">保存</text>
+            <text class="sheet-x" bindtap="onNoteClose">×</text>
+          </view>
+        </view>
+        <input class="nameinput" value="{{noteText}}" placeholder="比如：肩有点紧，重量保守" bindinput="onNoteInput" adjust-position cursor-spacing="120" />
+      </view>
+    </view>
+
+    <view class="mask" tt:if="{{platesOpen}}" bindtap="onPlatesClose">
+      <view class="sheet" catchtap="noop">
+        <view class="sheet-head">
+          <text class="sheet-title">杠铃片</text>
+          <view class="sheet-acts">
+            <text class="sheet-ok" bindtap="onPlatesClose">完成</text>
+            <text class="sheet-x" bindtap="onPlatesClose">×</text>
+          </view>
+        </view>
+        <view class="prow">
+          <text class="plab">杠重</text>
+          <input class="pinput" type="digit" value="{{plateBar}}" bindinput="onPlateBar" adjust-position cursor-spacing="120" />
+          <text class="punit">kg</text>
+        </view>
+        <view class="prow">
+          <text class="plab">目标</text>
+          <input class="pinput" type="digit" value="{{plateTarget}}" bindinput="onPlateTarget" adjust-position cursor-spacing="120" />
+          <text class="punit">kg</text>
+        </view>
+        <block tt:if="{{plateOut}}">
+          <view class="prow" tt:if="{{plateOut.perSide > 0}}">
+            <text class="plab">每边</text>
+            <text class="pval">{{plateOut.perSide}} kg</text>
+          </view>
+          <view class="plates">
+            <text class="plate" tt:for="{{plateOut.list}}" tt:key="index">{{item}}</text>
+            <text class="pempty" tt:if="{{!plateOut.list.length}}">不用加片</text>
+          </view>
+          <text class="phint" tt:if="{{plateOut.rest > 0}}">还差 {{plateOut.rest}} kg 凑不齐</text>
+        </block>
+      </view>
+    </view>
+
+    <view class="mask" tt:if="{{pickOpen}}" bindtap="onSwapClose">
+      <view class="sheet" catchtap="noop">
+        <view class="sheet-head">
+          <text class="sheet-title">换一个动作</text>
+          <text class="sheet-x" bindtap="onSwapClose">×</text>
+        </view>
+        <text class="sheet-state" tt:if="{{pickLoading}}">加载中…</text>
+        <text class="sheet-state" tt:if="{{pickErr}}" bindtap="onSwapRetry">没加载出来（{{pickErr}}），点这里重试</text>
+        <block tt:if="{{!pickLoading && !pickErr}}">
+          <view class="row" tt:for="{{pickList}}" tt:key="id" data-id="{{item.id}}" bindtap="onSwapPick">
+            <view class="rl">
+              <text class="rn">{{item.name}}</text>
+              <text class="rs">{{item.tgZh}} · {{item.eqZh}}</text>
+            </view>
+          </view>
+          <text class="sheet-state" tt:if="{{!pickList.length}}">没找到合适的替代动作</text>
+        </block>
+      </view>
+    </view>
+
+    <view class="mask" tt:if="{{exOpen}}" bindtap="onExClose">
+      <view class="sheet" catchtap="noop">
+        <view class="sheet-head">
+          <text class="sheet-title">{{exMode === 'free' ? '随便练' : '加一个动作'}}</text>
+          <text class="sheet-x" bindtap="onExClose">×</text>
+        </view>
+        <input class="nameinput" value="{{exQuery}}" placeholder="输入动作名，比如「卧推」" bindinput="onExInput" />
+        <text class="sheet-state" tt:if="{{exLoading}}">搜索中…</text>
+        <text class="sheet-state" tt:if="{{exErr}}">没搜出来（{{exErr}}）</text>
+        <text class="sheet-state" tt:elif="{{!exQuery}}">输入动作名，比如「卧推」</text>
+        <view class="row" tt:for="{{exList}}" tt:key="id" data-id="{{item.id}}" data-name="{{item.name}}" bindtap="onExPick">
+          <view class="rl">
+            <text class="rn">{{item.name}}</text>
+            <text class="rs">{{item.tgZh}} · {{item.eqZh}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="mask" tt:if="{{infoOpen}}" bindtap="onInfoClose">
+      <view class="sheet" catchtap="noop">
+        <view class="sheet-head">
+          <text class="sheet-title">{{info ? info.name : '动作示范'}}</text>
+          <text class="sheet-x" bindtap="onInfoClose">×</text>
+        </view>
+        <text class="sheet-state" tt:if="{{infoLoading}}">加载中…</text>
+        <text class="sheet-state" tt:if="{{infoErr}}">没加载出来（{{infoErr}}）</text>
+        <block tt:if="{{!infoLoading && !infoErr}}">
+          <video class="infovideo" tt:if="{{info.videoSrc && !videoErr}}" src="{{info.videoSrc}}"
+                 controls show-center-play-btn loop binderror="onVideoErr"></video>
+          <block tt:else>
+            <image class="infoimg" tt:if="{{info.imgData || !imgErr}}" src="{{info.imgData || (useWebp ? info.webpUrl : info.jpgUrl)}}" mode="aspectFit" binderror="onImgErr" />
+            <text class="sheet-state" tt:if="{{imgErr}}" bindtap="onImgRetry">图没加载出来，点这里重试</text>
+          </block>
+          <text class="vplayhint">点一下播放 · 循环</text>
+          <view class="inforow"><text class="infokey">部位</text><text>{{info.bpZh || info.bp}}</text></view>
+          <view class="inforow"><text class="infokey">器械</text><text>{{info.eqZh || info.eq}}</text></view>
+          <view class="inforow"><text class="infokey">英文名</text><text>{{info.en}}</text></view>
+          <view class="actions" style="margin-top:20rpx">
+            <view class="btn ghost" hover-class="pressed" bindtap="onInfoSwap">换个动作</view>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <!-- 专注模式：只留一组的事 -->
+  <view class="focus" tt:if="{{focus}}">
+    <view class="ftop">
+      <text class="fnext">后面：{{fNext}}</text>
+      <text class="fexit" bindtap="onFocusToggle">退出专注</text>
+    </view>
+    <text class="fname">{{fTitle}}</text>
+    <text class="fset">{{fSetLine}}</text>
+    <view class="fnum">
+      <text class="fv">{{fWeight}}<text class="fu">kg</text></text>
+      <text class="fx">×</text>
+      <text class="fv">{{fReps}}<text class="fu">{{fIsTime ? '秒' : '次'}}</text></text>
+    </view>
+    <text class="fside" tt:if="{{fPerSide}}">每边</text>
+    <view class="factions">
+      <view class="fbig primary" bindtap="onFinish">完成这组</view>
+      <view class="frow2">
+        <view class="fbtn" bindtap="onUndo">撤销</view>
+        <view class="fbtn" bindtap="onAddSet">加一组</view>
+        <view class="fbtn" bindtap="onNext">下一个</view>
+      </view>
+    </view>
+  </view>
+</view>

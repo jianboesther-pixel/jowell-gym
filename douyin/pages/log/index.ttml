@@ -1,0 +1,51 @@
+<view class="wrap">
+  <text class="word">补录一场</text>
+
+  <view class="rowline" bindtap="">
+    <text class="lk">日期</text>
+    <picker mode="date" value="{{d}}" bindchange="onDate">
+      <text class="lv">{{d}}</text>
+    </picker>
+  </view>
+  <input class="nameinput" value="{{name}}" placeholder="这场叫什么（胸 / 腿 / 临时练）" bindinput="onName" />
+
+  <view class="exrow" tt:for="{{ex}}" tt:key="id">
+    <text class="exname">{{item.name}}</text>
+    <view class="stepper">
+      <text class="sbtn" data-i="{{index}}" data-f="sets" data-d="-1" bindtap="onStep">−</text>
+      <text class="sval">{{item.sets}} 组</text>
+      <text class="sbtn" data-i="{{index}}" data-f="sets" data-d="1" bindtap="onStep">+</text>
+    </view>
+    <view class="stepper">
+      <text class="sbtn" data-i="{{index}}" data-f="reps" data-d="-1" bindtap="onStep">−</text>
+      <text class="sval">{{item.reps}} 次</text>
+      <text class="sbtn" data-i="{{index}}" data-f="reps" data-d="1" bindtap="onStep">+</text>
+    </view>
+    <view class="stepper">
+      <text class="sbtn" data-i="{{index}}" data-f="weight" data-d="-2.5" bindtap="onStep">−</text>
+      <text class="sval">{{item.weight}} kg</text>
+      <text class="sbtn" data-i="{{index}}" data-f="weight" data-d="2.5" bindtap="onStep">+</text>
+    </view>
+    <text class="del" data-i="{{index}}" bindtap="onRemove">×</text>
+  </view>
+
+  <view class="addrow" bindtap="onAddOpen">+ 添加动作</view>
+  <view class="savebtn" bindtap="onSave">{{saving ? '保存中…' : '保存这一场'}}</view>
+
+  <view class="mask" tt:if="{{addOpen}}" bindtap="onAddClose">
+    <view class="sheet" catchtap="noop">
+      <view class="sheet-head">
+        <text class="sheet-title">添加动作</text>
+        <text class="sheet-x" bindtap="onAddClose">×</text>
+      </view>
+      <input class="nameinput" value="{{q}}" placeholder="搜动作：卧推 / 深蹲" bindinput="onInput" />
+      <scroll-view scroll-y class="picklist">
+        <view class="pick" tt:for="{{list}}" tt:key="id" data-id="{{item.id}}" data-name="{{item.name}}" bindtap="onPick">
+          <text class="pname">{{item.name}}</text>
+          <text class="psub">{{item.bpZh}} · {{item.eqZh}}</text>
+        </view>
+      </scroll-view>
+      <text class="hint" tt:if="{{loading}}">搜索中…</text>
+    </view>
+  </view>
+</view>

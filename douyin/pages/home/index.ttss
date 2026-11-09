@@ -1,0 +1,268 @@
+page {
+  background: #f7f6f3;
+  color: #0e0e0e;
+}
+.wrap {
+  min-height: 100vh;
+  padding: 48rpx 40rpx calc(40rpx + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.word { font-size: 20rpx; letter-spacing: 12rpx; color: #8a8577; }
+.hi {
+  display: block;
+  font-size: 50rpx;
+  font-weight: 600;
+  letter-spacing: 6rpx;
+  margin-top: 18rpx;
+  font-family: "Songti SC", "Noto Serif SC", serif;
+}
+.date { display: block; font-size: 22rpx; letter-spacing: 4rpx; color: #6f6a5f; margin-top: 10rpx; }
+.gear {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  border: 1rpx solid #d8d3c6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+  color: #6f6a5f;
+}
+
+.hero { margin-top: 44rpx; }
+.k { font-size: 20rpx; letter-spacing: 8rpx; color: #8a8577; }
+.herorow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 20rpx;
+}
+.stampwrap { position: relative; }
+.stamp {
+  width: 288rpx;
+  height: 288rpx;
+  border: 6rpx solid #b0231b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-6deg);
+  position: relative;
+}
+.stamp::after {
+  content: "";
+  position: absolute;
+  left: 18rpx; right: 18rpx; top: 18rpx; bottom: 18rpx;
+  border: 2rpx solid #b0231b;
+  opacity: .55;
+}
+.stampt {
+  font-size: 152rpx;
+  color: #b0231b;
+  font-family: "JoWell Brush", "Kaiti SC", "STKaiti", "Songti SC", serif;
+  line-height: 1;
+}
+.done {
+  position: absolute;
+  right: -36rpx;
+  bottom: -20rpx;
+  width: 104rpx;
+  height: 104rpx;
+  border-radius: 50%;
+  border: 4rpx solid #b0231b;
+  color: #b0231b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(9deg);
+  background: #f7f6f3;
+  font-family: "JoWell Brush", "Kaiti SC", serif;
+}
+.dl { font-size: 22rpx; line-height: 1.1; }
+
+.side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 22rpx;
+  margin-top: 6rpx;
+}
+.sidecol { display: flex; gap: 22rpx; }
+.v {
+  font-size: 22rpx;
+  letter-spacing: 4rpx;
+  color: #6f6a5f;
+  font-family: "Songti SC", "Noto Serif SC", serif;
+}
+.recent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6rpx;
+}
+.rt { font-size: 22rpx; color: #0e0e0e; border-bottom: 1rpx solid #d8d3c6; padding-bottom: 4rpx; }
+.rd { font-size: 18rpx; color: #8a8577; }
+
+.meta {
+  display: block;
+  margin-top: 34rpx;
+  font-size: 31rpx;
+  color: #6f6a5f;
+  letter-spacing: 2rpx;
+}
+.start {
+  margin-top: 34rpx;
+  width: 50%;
+  text-align: center;
+  background: #0e0e0e;
+  color: #f7f6f3;
+  font-size: 29rpx;
+  font-weight: 600;
+  letter-spacing: 10rpx;
+  padding: 34rpx 0;
+}
+.pressed { opacity: .82; }
+
+.weekblock {
+  margin-top: 48rpx;
+  border-top: 1rpx solid #e4e3df;
+  border-bottom: 1rpx solid #e4e3df;
+  padding: 20rpx 0 16rpx;
+}
+.wknav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8rpx;
+}
+.arrow {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background: #fffefc;
+  border: 1rpx solid #e4e3df;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+  color: #3d3b35;
+}
+.arrow.off { opacity: .35; }
+.wklabel { font-size: 24rpx; color: #3d3b35; letter-spacing: 4rpx; }
+.week { display: flex; justify-content: space-between; margin-top: 18rpx; }
+.wd { width: 68rpx; display: flex; flex-direction: column; align-items: center; gap: 10rpx; }
+.wl { font-size: 18rpx; color: #8a8577; }
+.wn { font-size: 26rpx; font-weight: 600; }
+.wn.on {
+  background: #0e0e0e;
+  color: #f7f6f3;
+  width: 44rpx;
+  height: 44rpx;
+  line-height: 44rpx;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 22rpx;
+}
+.dot { width: 8rpx; height: 8rpx; border-radius: 50%; background: #d8d3c6; }
+.dot.done { background: #b0231b; }
+
+.rows { margin-top: 4rpx; }
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 26rpx 0;
+  border-bottom: 1rpx solid #e4e3df;
+}
+.rk { font-size: 20rpx; letter-spacing: 6rpx; color: #8a8577; }
+.rv {
+  font-size: 34rpx;
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  font-weight: 700;
+}
+.err { margin-top: 20rpx; font-size: 22rpx; color: #b0231b; }
+.foot {
+  margin-top: auto;
+  padding-top: 44rpx;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24rpx 32rpx;
+}
+.link {
+  font-size: 22rpx;
+  color: #8a8577;
+  text-decoration: underline;
+  text-underline-offset: 6rpx;
+}
+
+/* ---- 泼墨 ---- */
+.hero { position: relative; }
+.inkblot {
+  position: absolute;
+  right: -60rpx;
+  top: -30rpx;
+  width: 400rpx;
+  height: 360rpx;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(closest-side at 56% 44%, rgba(14, 14, 14, .12), rgba(14, 14, 14, .035) 62%, transparent 72%),
+    radial-gradient(closest-side at 34% 24%, rgba(176, 35, 27, .09), transparent 66%);
+  filter: blur(8rpx);
+  transform: rotate(9deg);
+}
+/* 第二团：落在印章下面的空白带里 */
+.inkblot.b2 {
+  right: auto;
+  left: 330rpx;
+  top: 250rpx;
+  width: 300rpx;
+  height: 240rpx;
+  filter: blur(10rpx);
+  transform: rotate(-14deg);
+  background:
+    radial-gradient(closest-side at 50% 50%, rgba(14, 14, 14, .10), transparent 70%),
+    radial-gradient(closest-side at 70% 30%, rgba(176, 35, 27, .07), transparent 62%);
+}
+.splat {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  background: rgba(14, 14, 14, .5);
+  border-radius: 50% 44% 56% 48%;
+  filter: blur(1rpx);
+}
+.splat.s1 { width: 16rpx; height: 14rpx; right: 40rpx; top: 40rpx; transform: rotate(18deg); }
+.splat.s2 { width: 9rpx; height: 11rpx; right: 8rpx; top: 128rpx; background: rgba(176, 35, 27, .5); }
+.splat.s3 { width: 13rpx; height: 10rpx; right: 150rpx; top: 300rpx; transform: rotate(-12deg); }
+.splat.s4 { width: 7rpx; height: 7rpx; right: 240rpx; top: 220rpx; background: rgba(176, 35, 27, .42); }
+.splat.s5 { width: 11rpx; height: 9rpx; right: 300rpx; top: 330rpx; transform: rotate(24deg); }
+
+
+/* 让内容压在墨迹上面 */
+.hero .k, .hero .herorow, .hero .meta, .hero .start { position: relative; z-index: 1; }
+
+/* 纸面颗粒：非常淡，只在浅色底上看得出来 */
+.wrap::after {
+  content: "";
+  position: fixed;
+  left: 0; right: 0; top: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .14;
+  background-image:
+    radial-gradient(rgba(14, 14, 14, .10) 1rpx, transparent 1.4rpx),
+    radial-gradient(rgba(14, 14, 14, .07) 1rpx, transparent 1.4rpx);
+  background-size: 9rpx 9rpx, 15rpx 15rpx;
+  background-position: 0 0, 4rpx 6rpx;
+}
+
+/* 内容压在颗粒层之上（颗粒是 fixed 的伪元素，不这样会盖住字） */
+.wrap > view, .wrap > text { position: relative; z-index: 1; }

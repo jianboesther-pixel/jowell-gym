@@ -1,0 +1,92 @@
+page {
+  background: #f7f6f3;
+  color: #0e0e0e;
+}
+.wrap {
+  min-height: 100vh;
+  padding: 48rpx 44rpx calc(40rpx + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+}
+.word {
+  font-size: 22rpx;
+  letter-spacing: 10rpx;
+  color: #8a8577;
+}
+.err {
+  display: block;
+  margin-top: 20rpx;
+  font-size: 22rpx;
+  color: #b0231b;
+}
+.sec {
+  margin-top: 36rpx;
+  padding-top: 26rpx;
+  border-top: 2rpx solid #0e0e0e;
+}
+.k {
+  font-size: 20rpx;
+  letter-spacing: 6rpx;
+  color: #8a8577;
+}
+.inputrow {
+  display: flex;
+  align-items: baseline;
+  gap: 10rpx;
+  margin-top: 18rpx;
+}
+.in {
+  flex: 1;
+  font-size: 48rpx;
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  font-weight: 700;
+  border-bottom: 1rpx solid #e4e3df;
+  padding: 10rpx 0;
+}
+.unit {
+  font-size: 20rpx;
+  color: #6f6a5f;
+}
+.savebtn {
+  margin-top: 26rpx;
+  background: #0e0e0e;
+  color: #f7f6f3;
+  text-align: center;
+  font-size: 26rpx;
+  letter-spacing: 6rpx;
+  padding: 26rpx 0;
+}
+.savebtn.ghost {
+  background: transparent;
+  color: #0e0e0e;
+  border: 1rpx solid #0e0e0e;
+}
+.hint {
+  display: block;
+  margin-top: 16rpx;
+  font-size: 20rpx;
+  color: #8a8577;
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+  padding: 22rpx 0;
+  border-bottom: 1rpx solid #e4e3df;
+  font-size: 24rpx;
+}
+.d {
+  color: #6f6a5f;
+}
+.v {
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  font-weight: 700;
+}
+
+.prow { display: flex; align-items: center; gap: 12rpx; margin-top: 14rpx; }
+.plab { width: 60rpx; font-size: 20rpx; color: #8a8577; }
+.pbar { flex: 1; height: 16rpx; background: #eceae3; }
+.pfill { height: 100%; background: #0e0e0e; }
+.pnum { width: 70rpx; text-align: right; font-size: 20rpx; color: #6f6a5f; }
+.wchart { display: flex; align-items: flex-end; gap: 10rpx; height: 140rpx; margin-top: 14rpx; }
+.wcol { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; }
+.wbar { width: 100%; background: #0e0e0e; min-height: 6rpx; }
+.wdate { font-size: 16rpx; color: #8a8577; margin-top: 8rpx; }

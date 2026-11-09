@@ -1,0 +1,42 @@
+page {
+  background: #f7f6f3;
+  color: #0e0e0e;
+}
+.wrap {
+  min-height: 100vh;
+  padding: 48rpx 40rpx calc(40rpx + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+}
+.word { font-size: 22rpx; letter-spacing: 10rpx; color: #8a8577; }
+.err { display: block; margin-top: 16rpx; font-size: 22rpx; color: #b0231b; }
+.card {
+  width: 100%;
+  margin-top: 28rpx;
+  border: 1rpx solid #e4e3df;
+  background: #fffefc;
+}
+.label { display: block; margin-top: 16rpx; font-size: 26rpx; font-weight: 600; }
+.hint { display: block; margin-top: 10rpx; font-size: 20rpx; color: #8a8577; }
+.empty {
+  margin-top: 32rpx;
+  padding: 40rpx 0;
+  font-size: 22rpx;
+  color: #8a8577;
+  line-height: 1.7;
+}
+.labelinput {
+  margin-top: 28rpx;
+  padding: 20rpx 22rpx;
+  border: 1rpx solid #e4e3df;
+  background: #fffefc;
+  font-size: 24rpx;
+}
+.btn {
+  margin-top: 20rpx;
+  text-align: center;
+  padding: 26rpx 0;
+  font-size: 26rpx;
+  letter-spacing: 4rpx;
+}
+.btn.primary { background: #0e0e0e; color: #f7f6f3; }
+.btn.ghost { border: 1rpx solid #0e0e0e; color: #0e0e0e; }

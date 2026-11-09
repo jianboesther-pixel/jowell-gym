@@ -1,0 +1,70 @@
+page {
+  background: #f7f6f3;
+  color: #0e0e0e;
+}
+.page {
+  min-height: 100vh;
+  padding: 48rpx 40rpx calc(40rpx + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+}
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  margin-bottom: 48rpx;
+}
+.title {
+  font-size: 44rpx;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+.sub {
+  font-size: 26rpx;
+  color: #6f6a5f;
+  line-height: 1.6;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+.field {
+  height: 96rpx;
+  padding: 0 28rpx;
+  border-radius: 22rpx;
+  background: #ecebe7;
+  color: #0e0e0e;
+  font-size: 30rpx;
+}
+.ph {
+  color: #8a8577;
+}
+.err {
+  font-size: 26rpx;
+  color: #b0231b;
+  padding-left: 8rpx;
+}
+.btn {
+  height: 104rpx;
+  line-height: 104rpx;
+  text-align: center;
+  border-radius: 26rpx;
+  background: #0e0e0e;
+  color: #f7f6f3;
+  font-size: 32rpx;
+  font-weight: 600;
+  margin-top: 12rpx;
+}
+.btn.busy {
+  opacity: .6;
+}
+.pressed {
+  opacity: .72;
+}
+.foot {
+  display: block;
+  margin-top: 40rpx;
+  font-size: 24rpx;
+  color: #8a8577;
+  line-height: 1.6;
+}

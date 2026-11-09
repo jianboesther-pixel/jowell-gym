@@ -1,0 +1,17 @@
+<view class="wrap">
+  <text class="word">健身房签到卡</text>
+  <text class="err" tt:if="{{err}}" bindtap="load">{{err}} · 点这里重试</text>
+
+  <block tt:if="{{card}}">
+    <image class="card" src="{{card.url}}" mode="widthFix" show-menu-by-longpress />
+    <text class="label" tt:if="{{card.label}}">{{card.label}}</text>
+    <text class="hint">到店把这张图给前台扫；也可以长按保存到相册。</text>
+  </block>
+  <view class="empty" tt:if="{{!loading && !card}}">
+    <text>还没有卡。上传一张会员码截图，之后到店直接打开这里。</text>
+  </view>
+
+  <input class="labelinput" value="{{label}}" placeholder="备注（比如：FitZone 健身房）" bindinput="onLabel" />
+  <view class="btn primary" bindtap="onPick">{{busy ? '上传中…' : (card ? '换一张' : '上传卡片')}}</view>
+  <view class="btn ghost" tt:if="{{card}}" bindtap="onRemove">删掉这张卡</view>
+</view>

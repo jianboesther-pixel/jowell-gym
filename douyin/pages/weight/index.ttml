@@ -1,0 +1,46 @@
+<view class="wrap">
+  <text class="word">体重</text>
+
+  <view class="inputrow">
+    <input class="input" type="digit" value="{{w}}" placeholder="今天多重" bindinput="onInput" />
+    <text class="unit">{{unit}}</text>
+    <view class="save" hover-class="pressed" bindtap="onSave">{{saving ? '记录中…' : '记录'}}</view>
+  </view>
+  <text class="msg" tt:if="{{savedMsg}}">{{savedMsg}}</text>
+  <text class="err" tt:if="{{err}}" bindtap="load">{{err}} · 点这里重试</text>
+
+  <view class="ov" tt:if="{{latest}}">
+    <view class="ocell"><text class="onum">{{latest.w}}</text><text class="olab">{{unit}} · {{latest.d}}</text></view>
+    <view class="ocell">
+      <text class="onum {{d7 > 0 ? 'up' : (d7 < 0 ? 'down' : '')}}">{{d7 === null ? '—' : (d7 > 0 ? '+' + d7 : d7)}}</text>
+      <text class="olab">7 天变化</text>
+    </view>
+    <view class="ocell">
+      <text class="onum {{d30 > 0 ? 'up' : (d30 < 0 ? 'down' : '')}}">{{d30 === null ? '—' : (d30 > 0 ? '+' + d30 : d30)}}</text>
+      <text class="olab">30 天变化</text>
+    </view>
+  </view>
+
+  <view class="goalrow">
+    <text class="glab">目标</text>
+    <input class="ginput" type="digit" value="{{goalInput}}" placeholder="比如 70" bindinput="onGoalInput" />
+    <text class="gunit">{{unit}}</text>
+    <view class="gsave" bindtap="onSaveGoal">保存</view>
+  </view>
+  <text class="gdiff" tt:if="{{toGoal !== null}}">距目标 {{toGoal > 0 ? '还差 ' + toGoal : (toGoal < 0 ? '已超 ' + (0 - toGoal) : '正好')}} {{unit}}</text>
+
+  <view class="chart" tt:if="{{bars.length}}">
+    <view class="cbar" tt:for="{{bars}}" tt:key="d" style="height:{{item.h}}rpx"></view>
+  </view>
+  <text class="range" tt:if="{{bars.length}}">{{lo}} – {{hi}} {{unit}} · 最近 {{bars.length}} 次</text>
+
+  <view class="rows">
+    <view class="row" tt:for="{{items}}" tt:key="d">
+      <text class="d">{{item.d}}</text>
+      <text class="v">{{item.w}}<text class="unit">{{unit}}</text></text>
+      <text class="del" catchtap="onDelete" data-d="{{item.d}}">删</text>
+    </view>
+  </view>
+  <text class="empty" tt:if="{{!loading && !items.length}}">还没有记录。称一次，曲线就开始了。</text>
+  <view class="otherlink" bindtap="onMeasure">也要记围度？去体测数据 ›</view>
+</view>

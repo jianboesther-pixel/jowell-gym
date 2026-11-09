@@ -1,0 +1,276 @@
+/* ============================================================================
+   JoWell 纸墨主题 — 覆盖 openGym 的调色板
+   ----------------------------------------------------------------------------
+   两套：
+     light  → 宣纸（纸底、墨字、黑按钮、朱红只做印章）
+     dark   → 墨夜（近黑底、纸白字、同样的朱红）
+
+   覆盖放在 index.css 之后（main.jsx 的 import 顺序），只改 token，不动布局：
+   所有用 var(--bg/--surface/--label/--acc) 的组件自动跟着变。
+   ========================================================================== */
+
+:root[data-theme="light"] {
+  --bg:        #f7f6f3;
+  --bg-el:     #fffefc;
+  --surface:   #fffefc;
+  --surface-2: #ecebe7;
+  --surface-3: #e4e3df;
+
+  --label:     #0e0e0e;
+  --label-2:   rgba(14, 14, 14, .62);
+  --label-3:   rgba(14, 14, 14, .38);
+  --label-4:   rgba(14, 14, 14, .16);
+
+  --sep:       rgba(14, 14, 14, .14);
+  --sep-op:    rgba(14, 14, 14, .08);
+
+  /* 强调 = 墨：主按钮黑底白字，和纸形成最大对比 */
+  --acc:       #0e0e0e;
+  --acc-2:     #000000;
+  --on-acc:    #fffefc;
+  --acc-soft:  rgba(14, 14, 14, .07);
+  --acc-line:  rgba(14, 14, 14, .28);
+
+  /* 语义色按纸面调暗一档 */
+  --red:       #b0231b;
+  --green:     #2f6b4f;
+  --orange:    #a8641a;
+  --grey:      #6f6a5f;
+
+  /* 更方的角：纸墨是印刷感，不是 iOS 玻璃感 */
+  --r-sm: 4px; --r: 6px; --r-lg: 10px; --r-xl: 14px; --r-card: 8px;
+}
+
+:root[data-theme="dark"] {
+  --bg:        #0b0b0a;
+  --bg-el:     #121211;
+  --surface:   #171716;
+  --surface-2: #1f1f1d;
+  --surface-3: #292927;
+
+  --label:     #f4f2ec;
+  --label-2:   rgba(244, 242, 236, .62);
+  --label-3:   rgba(244, 242, 236, .34);
+  --label-4:   rgba(244, 242, 236, .16);
+
+  --sep:       rgba(244, 242, 236, .16);
+  --sep-op:    rgba(244, 242, 236, .09);
+
+  --acc:       #f4f2ec;
+  --acc-2:     #ffffff;
+  --on-acc:    #0b0b0a;
+  --acc-soft:  rgba(244, 242, 236, .10);
+  --acc-line:  rgba(244, 242, 236, .30);
+
+  --red:       #c0392b;
+  --green:     #5f9e7d;
+  --orange:    #c9863c;
+  --grey:      #8c877b;
+
+  --r-sm: 4px; --r: 6px; --r-lg: 10px; --r-xl: 14px; --r-card: 8px;
+}
+
+/* 账号里选过的强调色（data-accent）会盖掉上面的墨色：纸墨主题里不玩彩色，
+   统一压回墨，免得设置里选个绿色又变回彩色界面。 */
+:root[data-theme="light"][data-accent],
+:root[data-theme="dark"][data-accent] {
+  --acc:    #0e0e0e;
+  --acc-2:  #000000;
+  --on-acc: #fffefc;
+  --acc-soft: rgba(14, 14, 14, .07);
+  --acc-line: rgba(14, 14, 14, .28);
+}
+:root[data-theme="dark"][data-accent] {
+  --acc:    #f4f2ec;
+  --acc-2:  #ffffff;
+  --on-acc: #0b0b0a;
+  --acc-soft: rgba(244, 242, 236, .10);
+  --acc-line: rgba(244, 242, 236, .30);
+}
+
+/* 选中文本也用墨，不用系统蓝 */
+:root[data-theme="light"] ::selection { background: #0e0e0e; color: #fffefc; }
+
+/* ------------------------------------------------------------------ 首页版式
+   纸墨主题的“主角”：一行小字标、一个人名、一枚印章、一个开始。
+   其余页面只换色，首页这一块是唯一动版面的地方。 */
+.serif { font-family: "Songti SC", "Noto Serif SC", "Source Han Serif SC", Georgia, serif; }
+
+.ink-head { display: flex; justify-content: space-between; align-items: flex-start; padding: 18px 0 2px; }
+.ink-word { font-size: 10px; letter-spacing: .42em; color: var(--label-3); }
+.ink-name {
+  font-family: "Songti SC", "Noto Serif SC", "Source Han Serif SC", Georgia, serif;
+  font-size: 32px; font-weight: 700; letter-spacing: .06em; margin: 10px 0 6px;
+}
+.ink-date { font-size: 11px; letter-spacing: .2em; color: var(--label-2); }
+.ink-gear {
+  width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--sep);
+  background: transparent; color: var(--label-2); display: flex; align-items: center; justify-content: center;
+}
+
+.ink-hero { margin: 24px 0 0; }
+.ink-k { font-size: 11px; letter-spacing: .34em; color: var(--label-2); }
+.ink-stamp {
+  font-family: "Songti SC", "Noto Serif SC", "Source Han Serif SC", Georgia, serif;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 104px; height: 104px; margin: 16px 0 0 -2px;
+  border: 3px solid var(--red); color: var(--red);
+  font-size: 58px; font-weight: 700; line-height: 1;
+  transform: rotate(-7deg); position: relative;
+  filter: url(#ink-rough);
+}
+.ink-stamp:before {
+  content: ""; position: absolute; inset: 6px; border: 1px solid var(--red); opacity: .55;
+}
+.ink-meta {
+  margin-top: 20px; font-size: 13px; letter-spacing: .04em; color: var(--label-2); line-height: 1.9;
+}
+.ink-start {
+  margin-top: 20px; display: inline-block;
+  background: var(--label); color: var(--bg);
+  border: 0; border-radius: 1px; cursor: pointer;
+  padding: 16px 30px; font-size: 14px; font-weight: 600; letter-spacing: .28em;
+}
+.ink-start:active { opacity: .82; }
+
+/* 一周：不再是白卡片，改成两条细线之间的平铺 */
+.ink-week {
+  margin-top: 30px; padding: 12px 0 6px;
+  border-top: 1px solid var(--sep); border-bottom: 1px solid var(--sep);
+  background: transparent; border-radius: 0;
+}
+.ink-week .week { display: flex; justify-content: space-between; padding: 8px 0 4px; }
+.ink-week .wday { width: 38px; text-align: center; }
+.ink-week .wday .lbl { font-size: 10px; letter-spacing: .2em; color: var(--label-2); }
+.ink-week .wday .num { font-size: 15px; font-weight: 600; margin-top: 6px; }
+.ink-week .wday.today .num {
+  background: var(--label); color: var(--bg);
+  width: 26px; height: 26px; line-height: 26px; margin: 2px auto 0;
+  border-radius: 50%; font-size: 12px;
+}
+.ink-week .wday .dot { width: 5px; height: 5px; margin: 8px auto 0; background: var(--label-3); border-radius: 50%; }
+/* 这周练过的日子：点变红，一眼看出来 */
+.ink-week .wday .dot.done { background: var(--red); width: 6px; height: 6px; }
+.ink-week .wday .dot.plan { background: var(--label-3); }
+.ink-week .wday .dot.ovr { background: var(--label-2); }
+.ink-week .wday .dot.noted { background: transparent; border: 1px solid var(--label-3); }
+
+/* 两条数据行：细线分隔、左小字、右宋体大数字（和预览一致） */
+.ink-rows { margin: 6px 0 0; }
+.ink-rw {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 15px 2px; border-bottom: 1px solid var(--sep);
+}
+.ink-rw .k { font-size: 11px; letter-spacing: .26em; color: var(--label-2); }
+.ink-rw .v {
+  font-family: "Songti SC", "Noto Serif SC", "Source Han Serif SC", Georgia, serif;
+  font-size: 20px; font-weight: 700; letter-spacing: .01em;
+}
+.ink-rw .v small { font-size: 10px; font-weight: 500; color: var(--label-2); margin-left: 5px; letter-spacing: .14em; }
+
+/* 首页只留模板那四块，其余入口不显示 */
+.ink-rest { display: none; }
+
+/* 排版：和预览一致的边距与字号 */
+.ink-home { padding-left: 6px; padding-right: 6px; position: relative; }
+.ink-home > *:not(.ink-bloom) { position: relative; z-index: 1; }
+/* 墨团：模糊的径向渐变，叠在纸面上（multiply 才不会发光） */
+.ink-bloom { position: absolute; pointer-events: none; z-index: 0; filter: blur(44px); mix-blend-mode: multiply; }
+.ink-bloom.b1 {
+  right: -140px; top: -110px; width: 360px; height: 320px; opacity: .42;
+  background: radial-gradient(ellipse at 45% 45%, #232323 0%, #6e6e6e 46%, transparent 72%);
+}
+.ink-bloom.b2 {
+  right: -20px; top: 40px; width: 210px; height: 180px; opacity: .26;
+  background: radial-gradient(ellipse at 50% 50%, #4a4a4a 0%, transparent 68%);
+}
+.ink-home .ink-name {
+  font-size: 38px; font-weight: 600; letter-spacing: .14em;
+  font-family: "Songti SC", "Noto Serif SC", "Source Han Serif SC", Georgia, serif;
+}
+.ink-home .ink-word { font-size: 10px; letter-spacing: .5em; }
+.ink-home .ink-date { font-size: 12.5px; letter-spacing: .18em; }
+.ink-home .ink-k {
+  font-family: "Kaiti SC", "STKaiti", "KaiTi", "Songti SC", serif;
+  font-size: 15px; letter-spacing: .3em; margin-top: 10px;
+}
+.ink-home .ink-hero { margin-top: 32px; }
+/* 印章用的毛笔字：马善政毛笔楷书（OFL），已裁到 27 个字，11KB */
+@font-face {
+  font-family: "JoWell Brush";
+  src: url("/fonts/stamp-brush.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+.ink-home .ink-stamp {
+  width: 150px; height: 150px; font-size: 92px; margin-top: 22px;
+  border-width: 4px; opacity: .92;
+  font-family: "JoWell Brush", "Kaiti SC", "STKaiti", "KaiTi", serif;
+  font-weight: 400; letter-spacing: 0;
+}
+.ink-home .ink-stamp:before { inset: 9px; border-width: 1.5px; }
+/* 印章右边空出来的地方：一列竖排小字，像画卷上的题款 */
+.ink-hero-row { display: flex; justify-content: space-between; align-items: flex-start; }
+.ink-side { display: flex; gap: 18px; margin-top: 14px; }
+.ink-v {
+  writing-mode: vertical-rl; text-orientation: upright;
+  font-size: 13px; letter-spacing: .22em; color: var(--label-2);
+  font-family: "Songti SC", "Noto Serif SC", "Source Han Serif SC", Georgia, serif;
+}
+.ink-v b { color: var(--label); font-weight: 700; font-size: 15px; }
+
+/* 开始按钮 + 右边"最近训练" */
+.ink-sidewrap { display: flex; flex-direction: column; align-items: flex-end; gap: 20px; margin-top: 14px; }
+.ink-recent-link {
+  background: none; border: 0; padding: 0; cursor: pointer; text-align: right;
+  color: var(--label-2); display: flex; flex-direction: column; align-items: flex-end; gap: 4px;
+}
+.ink-recent-link .t { font-size: 12px; letter-spacing: .14em; color: var(--label); border-bottom: 1px solid var(--sep); padding-bottom: 2px; }
+.ink-recent-link .d { font-size: 11px; letter-spacing: .06em; color: var(--label-3); }
+/* 已完成：一枚圆章，压在方章右下角，垂直排"已 / 完成" */
+.ink-stampwrap { position: relative; display: inline-block; }
+.ink-done {
+  position: absolute; right: -30px; bottom: -14px;
+  width: 78px; height: 78px; border-radius: 50%;
+  border: 3px solid var(--red); color: var(--red);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1px; transform: rotate(9deg);
+  font-family: "JoWell Brush", "Kaiti SC", serif;
+  font-size: 17px; line-height: 1.05; letter-spacing: 0;
+  opacity: .92; background: var(--bg);
+  filter: url(#ink-rough);
+}
+.ink-home .ink-meta { font-size: 16px; margin-top: 28px; line-height: 2; letter-spacing: .06em; }
+.ink-home .ink-start {
+  display: block; width: 50%; min-width: 170px; margin-top: 28px;
+  padding: 20px 0; text-align: center;
+  font-size: 16px; letter-spacing: .32em; border-radius: 0;
+}
+.ink-home .ink-rw { padding: 18px 2px; }
+.ink-home .ink-rw .v { font-size: 22px; }
+/* 模板里没有"选择其他训练"，先不显示，免得周条下面多一行 */
+.ink-week .btn.dim { display: none; }
+
+/* 首页其余部分：不再是白卡片，改成细线分区；标题和数字用宋体，和预览一致 */
+.ink-home > .card {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--sep);
+  border-radius: 0;
+  margin: 0;
+  padding: 20px 0;
+  box-shadow: none;
+}
+.ink-home > .card:first-of-type { border-top: 0; }
+.ink-home h2 {
+  font-family: "Songti SC", "Noto Serif SC", "Source Han Serif SC", Georgia, serif;
+  font-size: 13px; font-weight: 600; letter-spacing: .2em; color: var(--label-2);
+}
+.ink-home .big {
+  font-family: "Songti SC", "Noto Serif SC", "Source Han Serif SC", Georgia, serif;
+  font-weight: 700; letter-spacing: .01em;
+}
+.ink-home .lbl2 { font-size: 10px; letter-spacing: .3em; color: var(--label-2); }
+.ink-home .ttl { font-family: "Songti SC", "Noto Serif SC", "Source Han Serif SC", Georgia, serif; font-weight: 700; }
+

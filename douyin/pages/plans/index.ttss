@@ -1,0 +1,234 @@
+page {
+  background: #f7f6f3;
+  color: #0e0e0e;
+}
+.wrap {
+  min-height: 100vh;
+  padding: 48rpx 44rpx calc(40rpx + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+}
+.word {
+  font-size: 22rpx;
+  letter-spacing: 10rpx;
+  color: #8a8577;
+}
+.err {
+  display: block;
+  margin-top: 20rpx;
+  font-size: 22rpx;
+  color: #b0231b;
+}
+.sec {
+  margin-top: 36rpx;
+}
+.sechead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 16rpx;
+  border-bottom: 2rpx solid #0e0e0e;
+}
+.k {
+  font-size: 20rpx;
+  letter-spacing: 6rpx;
+  color: #8a8577;
+}
+.add {
+  font-size: 24rpx;
+  color: #0e0e0e;
+}
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 26rpx 0;
+  border-bottom: 1rpx solid #e4e3df;
+}
+.rowl {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+.name {
+  font-size: 32rpx;
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  font-weight: 700;
+}
+.sub {
+  font-size: 20rpx;
+  color: #8a8577;
+}
+.chev {
+  font-size: 34rpx;
+  color: #8a8577;
+}
+.day {
+  font-size: 24rpx;
+  color: #6f6a5f;
+  width: 100rpx;
+}
+.names {
+  flex: 1;
+  font-size: 26rpx;
+  color: #0e0e0e;
+  text-align: right;
+}
+.empty {
+  display: block;
+  margin-top: 24rpx;
+  font-size: 24rpx;
+  color: #8a8577;
+}
+
+/* 弹层 */
+.mask {
+  position: fixed;
+  left: 0; right: 0; top: 0; bottom: 0;
+  background: rgba(10, 10, 8, .38);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  z-index: 20;
+}
+.sheet {
+  background: #fffefc;
+  border-radius: 28rpx 28rpx 0 0;
+  padding: 28rpx 32rpx calc(28rpx + env(safe-area-inset-bottom));
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.sheet-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.sheet-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+}
+.sheet-x {
+  font-size: 32rpx;
+  color: #8a8577;
+  padding: 0 10rpx;
+}
+.pick {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 26rpx 4rpx;
+  border-bottom: 1rpx solid #e4e3df;
+}
+.pname {
+  font-size: 28rpx;
+}
+.psub {
+  font-size: 20rpx;
+  color: #8a8577;
+}
+.check {
+  font-size: 30rpx;
+  color: #0e0e0e;
+}
+.nameinput {
+  margin-top: 20rpx;
+  padding: 22rpx 24rpx;
+  border: 1rpx solid #e4e3df;
+  background: #faf9f5;
+  font-size: 28rpx;
+}
+.exrow {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #e4e3df;
+}
+.exname {
+  flex: 1;
+  font-size: 26rpx;
+  min-width: 0;
+}
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+}
+.sbtn {
+  width: 44rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #6f6a5f;
+  border: 1rpx solid #e4e3df;
+  padding: 4rpx 0;
+}
+.sval {
+  font-size: 22rpx;
+  color: #4b463c;
+  min-width: 76rpx;
+  text-align: center;
+}
+.del {
+  font-size: 32rpx;
+  color: #b0231b;
+  padding: 0 8rpx;
+}
+.addrow {
+  margin-top: 20rpx;
+  padding: 22rpx 0;
+  text-align: center;
+  font-size: 24rpx;
+  color: #6f6a5f;
+  border: 1rpx dashed #d8d3c6;
+}
+.savebtn {
+  margin-top: 24rpx;
+  background: #0e0e0e;
+  color: #f7f6f3;
+  text-align: center;
+  font-size: 28rpx;
+  letter-spacing: 6rpx;
+  padding: 26rpx 0;
+}
+.addlist {
+  max-height: 46vh;
+  margin-top: 8rpx;
+}
+
+.dup {
+  font-size: 20rpx;
+  color: #6f6a5f;
+  border: 1rpx solid #d8d3c6;
+  border-radius: 999rpx;
+  padding: 6rpx 16rpx;
+  margin-right: 12rpx;
+}
+.movebtn {
+  font-size: 22rpx;
+  color: #3d3b35;
+  border: 1rpx solid #e4e3df;
+  border-radius: 8rpx;
+  padding: 4rpx 14rpx;
+  margin-left: 8rpx;
+}
+
+.ss {
+  font-size: 18rpx;
+  color: #8a8577;
+  border: 1rpx solid #e4e3df;
+  border-radius: 999rpx;
+  padding: 4rpx 12rpx;
+  margin-left: 8rpx;
+}
+.ss.on { color: #b0231b; border-color: #b0231b; }
+
+.rotchips { display: flex; flex-wrap: wrap; gap: 12rpx; margin-top: 12rpx; }
+.rchip {
+  padding: 12rpx 22rpx;
+  border: 1rpx solid #e4e3df;
+  border-radius: 999rpx;
+  background: #fffefc;
+  font-size: 22rpx;
+}
+.rchip.on { background: #0e0e0e; border-color: #0e0e0e; color: #f7f6f3; }
+.hint { display: block; margin-top: 12rpx; font-size: 20rpx; color: #8a8577; }
